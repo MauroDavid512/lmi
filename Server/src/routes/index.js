@@ -4,13 +4,14 @@ const { Router } = require('express');
 
 
 const router = Router();
-
+const player = require('./player')
+const team = require('./team')
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.use('/players', players )
-
+router.use('/player', player )
+router.use('/team', team)
 
 
 

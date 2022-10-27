@@ -12,4 +12,11 @@
 
 button{
     outline: none;
+    padding: 10px;
+    border-radius: 5%;
+    border: none;
+}
+
+.padding{
+    padding: 30px;
 }

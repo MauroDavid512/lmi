@@ -12,7 +12,7 @@ const Landing = () => {
             <br />
             <img className="imageLanding" src="https://res.cloudinary.com/maurodavid/image/upload/v1666718836/LMI/LOGO_LMI_yga1rh.png" alt="liga mendocina de improvisación" />
             <br />
-            <Link to="/lmi/home"><button className="btn">ENTRAR</button></Link>
+            <div className="padding"><Link to="/lmi/home"><button className="btn">ENTRAR</button></Link></div>
         </div>
     )
 }
