@@ -11,4 +11,14 @@ router.get("/", async (req, res) => {
     }
 })
 
+router.post("/create", async (req, res) => {
+    try{
+        const data = req.body
+        const createdPlayer = createPlayer(data)
+        res.status(200).json(createdPlayer)
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+})
+
 module.exports = router
