@@ -38,6 +38,7 @@ const createPlayer = async (data) => {
                 birthday,
                 description
             })
+            console.log(newPlayer)
             return newPlayer
         }
     } catch (error) {
