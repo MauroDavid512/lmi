@@ -1,11 +1,21 @@
 const { Router } = require('express')
-const { getAllPlayers, createPlayer } = require('./utils')
+const { getAllTeams, createTeam } = require('./utils')
 const router = Router();
 
 router.get("/", async (req, res) => {
     try{
-        const info = await getAllPlayers()
+        const info = await getAllTeams()
         res.status(200).json(info)
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+})
+
+router.post("/create", async (req, res) => {
+    try{
+        const data = req.body
+        const createdTeam = createTeam(data)
+        res.status(200).json(createdTeam)
     }catch(error){
         res.status(400).json({error:error.message})
     }

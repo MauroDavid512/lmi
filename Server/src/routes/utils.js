@@ -78,6 +78,9 @@ const createTeam = async (data) => {
         const {name, description, image, players} = data
         const allTeams = getAllTeams()
         const aux = allTeams.find(e => e.name === name)
+        let idPlayer = await Player.findAll({
+            where: { id: players },
+        }); 
         if(aux) {
             throw new Error("Ya existe un equipo con ese nombre")
         } else {
@@ -87,11 +90,11 @@ const createTeam = async (data) => {
                 image
             })
             
-            newTeam.addPlayer
+            newTeam.addPlayer(idPlayer)
 
         }
     }catch(error) {
-        console.log("Error en función createTeam")
+        console.log("Error en función createTeam "+error.message)
     }
 }
 
@@ -100,6 +103,8 @@ const createTeam = async (data) => {
 module.exports = {
     createPlayer,
     getAllPlayers,
-    getPlayerDetails
+    getPlayerDetails,
+    getAllTeams,
+    createTeam
 }
 
