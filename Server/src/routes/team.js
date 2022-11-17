@@ -14,8 +14,8 @@ router.get("/", async (req, res) => {
 router.post("/create", async (req, res) => {
     try{
         const data = req.body
-        const createdTeam = createTeam(data)
-        res.status(200).json(createdTeam)
+        const createdTeam = await createTeam(data)
+        res.status(201).json(createdTeam)
     }catch(error){
         res.status(400).json({error:error.message})
     }

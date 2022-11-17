@@ -29,7 +29,7 @@ const createPlayer = async (data) => {
         const allPlayers = await getAllPlayers()
         const aux = allPlayers.find(e => e.name === name)
         if(aux){
-            throw new Error("Ya existe ese jugador")
+            throw new Error("Ya existe es jugador")
         } else {
             const newPlayer = Player.create({
                 name,
@@ -42,7 +42,7 @@ const createPlayer = async (data) => {
             return newPlayer
         }
     } catch (error) {
-
+        console.log("Error en función createPlayer "+error.message)
     }
 }
 
@@ -62,7 +62,7 @@ const getAllTeams = async () => {
         const allTeams = await Team.findAll({
             include: {
                 model: Player,
-                attributes: ['name'],
+                attributes: ['id'],
                 through: {
                     attributes: []
                 }
@@ -70,7 +70,7 @@ const getAllTeams = async () => {
         })
         return allTeams
     }catch(error){
-
+        console.log("Error en función getAllTeam "+error.message)
     }
 }
 
@@ -78,21 +78,22 @@ const createTeam = async (data) => {
     try{
         const {name, description, image, players} = data
         const allTeams = await getAllTeams()
-        console.log(allTeams)
         const aux = allTeams.find(e => e.name === name)
-        let namePlayer = await Player.findAll({
-            where: { name: players },
+        let Players = await Player.findAll({
+            where: { id: players },
         }); 
+        console.log(Players)
         if(aux) {
             throw new Error("Ya existe un equipo con ese nombre")
         } else {
-            const newTeam = Team.create({
+            
+            let newTeam = await Team.create({
                 name,
                 description,
                 image
             })
             
-            newTeam.addPlayer(namePlayer)
+            newTeam.addPlayer(Players)
             return newTeam
         }
     }catch(error) {
