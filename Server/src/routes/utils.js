@@ -48,11 +48,12 @@ const createPlayer = async (data) => {
 
 const getPlayerDetails = async (id) => {
     try{
-        const allPlayers = getAllPlayers()
-        const player = allPlayers.find(e => e.id === id)
+        const allPlayers = await getAllPlayers()
+        const player = allPlayers.filter((e) => e.id === id)
+        console.log(player)
         return player
     }catch(error){
-        console.log('Error en función getPlayerDetails')
+        console.log('Error en función getPlayerDetails '+error.message)
     }
 }
 
@@ -76,10 +77,11 @@ const getAllTeams = async () => {
 const createTeam = async (data) => {
     try{
         const {name, description, image, players} = data
-        const allTeams = getAllTeams()
+        const allTeams = await getAllTeams()
+        console.log(allTeams)
         const aux = allTeams.find(e => e.name === name)
-        let idPlayer = await Player.findAll({
-            where: { id: players },
+        let namePlayer = await Player.findAll({
+            where: { name: players },
         }); 
         if(aux) {
             throw new Error("Ya existe un equipo con ese nombre")
@@ -90,8 +92,8 @@ const createTeam = async (data) => {
                 image
             })
             
-            newTeam.addPlayer(idPlayer)
-
+            newTeam.addPlayer(namePlayer)
+            return newTeam
         }
     }catch(error) {
         console.log("Error en función createTeam "+error.message)
