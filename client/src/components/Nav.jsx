@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"
 
 
 const Nav = () => {
@@ -6,7 +7,19 @@ const Nav = () => {
 
     return (
         <div>
-            Nav
+            <div>
+            Barra de busqueda
+            </div>
+            <div>
+                <ul>
+                    <li>Principio</li>
+                    <li>Jugadores</li>
+                    <li>Equipos</li>
+                    <li>Torneos</li>
+                    <li>¡Comprar entradas!</li>
+                    <li>Contrataciones</li>
+                </ul>
+            </div>
         </div>
     )
 }
