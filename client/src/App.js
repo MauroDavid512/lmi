@@ -13,6 +13,7 @@ function App() {
         <Route exact path='/' element={<Landing/>} />
         <Route path="/lmi" element={<Nav />} />
         <Route path="/lmi/home" element={<div><Nav /><Home /></div>} />
+        <Route path="/lmi/player/:id" element={<div></div>} />
       </Routes>
     </div>
   );
