@@ -65,6 +65,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 current: 'contact'
             }
+        case GETALLPLAYERS:
+            return {
+                ...state,
+                players: action.payload
+            }
         default: return state
     }
 }
