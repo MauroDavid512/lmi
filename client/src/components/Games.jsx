@@ -1,14 +1,14 @@
 import React from "react";
 
 
-const Init = () => {
+const Games = () => {
 
 
     return (
         <div>
-            Init
+            Games
         </div>
     )
 }
 
-export default Init
+export default Games

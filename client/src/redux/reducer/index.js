@@ -5,12 +5,27 @@ import {
     TOURNAMENTS,
     GAMES,
     TICKET,
-    CONTACT
+    CONTACT,
+    GETALLPLAYERS,
+    GETALLTEAMS,
+    GETALLTOURNAMENTS,
+    PLAYERDETAIL,
+    TEAMDETAIL,
+    TOURNAMENTDETAIL
 } from '../actions'
 
 
 const initialState = {
-    current: 'home'
+    current: 'home',
+    tournaments: [],
+    players: [],
+    teams: [],
+    games: [],
+    tournamentDetail: {},
+    playerDetail: {},
+    teamDetail: {},
+    gameDetail: {}
+
 }
 
 const rootReducer = (state = initialState, action) => {
