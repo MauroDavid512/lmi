@@ -8,7 +8,7 @@ const PlayerCard = (props) => {
         <div>
             {props.name}
             <br />
-            {props.image}
+            <img src={props.image} alt={props.name} />
         </div>
     )
 }

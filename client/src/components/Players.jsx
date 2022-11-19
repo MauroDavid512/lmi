@@ -17,7 +17,7 @@ const Players = () => {
 
     return (
         <div>
-            {players.map(e => <PlayerCard name={e.name} image={e.image}/>)}
+            {players?players.map(e => <PlayerCard name={e.name} image={e.image}/>):false}
         </div>
     )
 }

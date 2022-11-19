@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const TeamCard = (props) => {
+const TournamentCard = (props) => {
 
 
     return (
@@ -13,4 +13,4 @@ const TeamCard = (props) => {
     )
 }
 
-export default TeamCard
+export default TournamentCard
