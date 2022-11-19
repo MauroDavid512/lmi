@@ -13,7 +13,6 @@ const Players = () => {
     })
 
     let players = useSelector(state => state.players)
-    console.log(players)
 
     return (
         <div>
