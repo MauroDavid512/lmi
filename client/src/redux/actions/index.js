@@ -59,6 +59,9 @@ export const selectCONTACT = () => {
     }
 }
 
+
+// ------------------------------------  PLAYER ACTIONS --------------------------------------------  
+
 export const getAllPlayers = () => {
     return async function (dispatch){
         let allPlayers = await axios.get('http://localhost:3001/player')
@@ -66,6 +69,16 @@ export const getAllPlayers = () => {
         dispatch({ type: GETALLPLAYERS, payload: respuesta })
     }
 }
+
+export const getPlayerDetail = (id) => {
+    return async function (dispatch){
+        let player = await axios.get(`http://localhost:3001/player/${id}`)
+        const respuesta = player.data
+        dispatch({ type: PLAYERDETAIL, payload: respuesta})
+    }
+}
+
+// ------------------------------------  TEAM ACTIONS -------------------------------------------- 
 
 export const getAllTeams = () => {
     return async function (dispatch){
@@ -75,10 +88,28 @@ export const getAllTeams = () => {
     }
 }
 
+export const getTeamDetail = (id) => {
+    return async function (dispatch){
+        let team = await axios.get(`http://localhost:3001/team/${id}`)
+        const respuesta = team.data
+        dispatch({ type: TEAMDETAIL, payload: respuesta})
+    }
+}
+
+// ------------------------------------  TOURNAMENT ACTIONS -------------------------------------------- 
+
 export const getAllTournaments = () => {
     return async function (dispatch){
         let allTournaments = await axios.get('http://localhost:3001/tournament')
         const respuesta = allTournaments.data
         dispatch({ type: GETALLTOURNAMENTS, payload: respuesta })
+    }
+}
+
+export const getTournamentDetail = (id) => {
+    return async function (dispatch){
+        let tournament = await axios.get(`http://localhost:3001/tournament/${id}`)
+        const respuesta = tournament.data
+        dispatch({ type: TOURNAMENTDETAIL, payload: respuesta})
     }
 }

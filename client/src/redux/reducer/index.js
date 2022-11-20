@@ -30,6 +30,9 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
+
+        // Renderizado seleccionando opciones en Nav -------------------------------------
+
         case HOME:
             return {
                 ...state,
@@ -65,11 +68,51 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 current: 'contact'
             }
+
+        // Funcionalidades de PLAYER -----------------------------------------------------
+
         case GETALLPLAYERS:
             return {
                 ...state,
                 players: action.payload
             }
+        case PLAYERDETAIL:
+            return {
+                ...state,
+                playerDetail: action.payload
+            }
+
+        // Funcionalidades de TEAM --------------------------------------------------------
+
+        case GETALLTEAMS:
+            return {
+                ...state,
+                teams: action.payload
+            }
+        case TEAMDETAIL:
+            return {
+                ...state,
+                teamDetail: action.payload
+            }
+
+            //Funcionalidades de TOURNAMENT ------------------------------------------------
+
+        case GETALLTOURNAMENTS:
+            return {
+                ...state,
+                tournaments: action.payload
+            }
+        case TOURNAMENTDETAIL:
+            return {
+                ...state,
+                tournamentDetail: action.payload
+            }
+
+
+
+
+//------------------------------------------------------------------------------------------
+
         default: return state
     }
 }
