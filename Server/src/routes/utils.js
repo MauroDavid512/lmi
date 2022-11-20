@@ -59,6 +59,14 @@ const getPlayerDetails = async (id) => {
     }
 }
 
+const getPlayerTeams = async (id) => {
+    try{
+        
+    }catch(error){
+        console.log('Error en funcion getPlayerTeams '+ error.message)
+    }
+}
+
 const getAllTeams = async () => {
     try {
         const allTeams = await Team.findAll({
@@ -232,8 +240,8 @@ const preloadTournaments = async () => {
                 description: tournaments.description
             };
         });
-
         for (const tournament of data) {
+            console.log(tournament)
             createTournament(tournament);
         }
 
