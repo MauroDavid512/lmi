@@ -3,6 +3,10 @@
 const axios = require('axios')
 const { Player, Team, Tournament } = require('../db.js')
 
+const prePlayers = require('../preloads/players.json')
+const preTeams = require('../preloads/teams.json')
+const preTournaments = require('../preloads/tournaments.json')
+
 
 const getAllPlayers = async () => {
     try {
@@ -25,10 +29,10 @@ const getAllPlayers = async () => {
 
 const createPlayer = async (data) => {
     try {
-        const {name, image, age, birthday, description} = data
+        const { name, image, age, birthday, description } = data
         const allPlayers = await getAllPlayers()
         const aux = allPlayers.find(e => e.name === name)
-        if(aux){
+        if (aux) {
             throw new Error("Ya existe es jugador")
         } else {
             const newPlayer = Player.create({
@@ -38,27 +42,25 @@ const createPlayer = async (data) => {
                 birthday,
                 description
             })
-            console.log(newPlayer)
             return newPlayer
         }
     } catch (error) {
-        console.log("Error en función createPlayer "+error.message)
+        console.log("Error en función createPlayer " + error.message)
     }
 }
 
 const getPlayerDetails = async (id) => {
-    try{
+    try {
         const allPlayers = await getAllPlayers()
         const player = allPlayers.filter((e) => e.id === id)
-        console.log(player)
-        return player
-    }catch(error){
-        console.log('Error en función getPlayerDetails '+error.message)
+        return player[0]
+    } catch (error) {
+        console.log('Error en función getPlayerDetails ' + error.message)
     }
 }
 
 const getAllTeams = async () => {
-    try{
+    try {
         const allTeams = await Team.findAll({
             include: {
                 model: Player,
@@ -69,52 +71,50 @@ const getAllTeams = async () => {
             }
         })
         return allTeams
-    }catch(error){
-        console.log("Error en función getAllTeam "+error.message)
+    } catch (error) {
+        console.log("Error en función getAllTeam " + error.message)
     }
 }
 
 const createTeam = async (data) => {
-    try{
-        const {name, description, image, players} = data
+    try {
+        const { name, description, image, players } = data
         const allTeams = await getAllTeams()
         const aux = allTeams.find(e => e.name === name)
         let Players = await Player.findAll({
             where: { id: players },
-        }); 
-        console.log(Players)
-        if(aux) {
+        });
+        if (aux) {
             throw new Error("Ya existe un equipo con ese nombre")
         } else {
-            
+
             let newTeam = await Team.create({
                 name,
                 description,
                 image
             })
-            
+
             newTeam.addPlayer(Players)
             return newTeam
         }
-    }catch(error) {
-        console.log("Error en función createTeam "+error.message)
+    } catch (error) {
+        console.log("Error en función createTeam " + error.message)
     }
 }
 
 
 const getTeamDetails = async (id) => {
-    try{
+    try {
         const allTeams = await getAllTeams()
         const team = allTeams.filter((e) => e.id === id)
-        console.log(team)
-        return team
-    }catch(error){
-        console.log('Error en función getTeamDetails '+error.message)
+        return team[0]
+    } catch (error) {
+        console.log('Error en función getTeamDetails ' + error.message)
     }
 }
 
 const getAllTournaments = async () => {
-    try{
+    try {
         const allTournaments = await Tournament.findAll({
             include: {
                 model: Team,
@@ -125,53 +125,123 @@ const getAllTournaments = async () => {
             }
         })
         return allTournaments
-    }catch(error){
+    } catch (error) {
         console.log("error en funcion getAllTournaments ---> " + error.message)
     }
 }
 
 const createTournament = async (data) => {
-    try{
-        const {name, description, image, year, teams} = data
+    try {
+        const { name, description, image, year, teams } = data
         const allTournaments = await getAllTournaments()
         const aux = allTournaments.find(e => e.name === name)
         let Teams = await Team.findAll({
             where: { id: teams },
-        }); 
-        console.log(Teams)
-        if(aux) {
+        });
+        if (aux) {
             throw new Error("Ya existe un torneo con ese nombre")
         } else {
-            
+
             let newTournament = await Tournament.create({
                 name,
                 description,
                 image,
                 year
             })
-            
+
             newTournament.addTeam(Teams)
             return newTournament
         }
-    }catch(error){
+    } catch (error) {
         console.log("error en funcion createTournament ---> " + error.message)
     }
 }
 
 const getTournamentDetail = async (id) => {
-    try{
-        try{
+    try {
+        try {
             const allTournaments = await getAllTournaments()
             const tournament = allTournaments.filter((e) => e.id === id)
-            console.log(tournament)
-            return tournament
-        }catch(error){
-            console.log('Error en función getTournamentDetails '+error.message)
+            return tournament[0]
+        } catch (error) {
+            console.log('Error en función getTournamentDetails ' + error.message)
         }
-    }catch(error){
+    } catch (error) {
         console.log("error en funcion getTournamentDetail ---> " + error.message)
     }
 }
+
+
+
+// Funciones Pre-load -------------------------------------------------->
+
+const preloadPlayers = async () => {
+
+    try {
+        let data = prePlayers.map((players) => {
+            return {
+                name: players.name,
+                image: players.image,
+                age: players.age,
+                birthday: players.birthday,
+                description: players.description
+            };
+        });
+
+        for (const player of data) {
+            createPlayer(player);
+        }
+
+        return data;
+    } catch (error) {
+        console.log("ERROR EN preload_players", error);
+    }
+};
+
+const preloadTeams = async () => {
+
+    try {
+        let data = preTeams.map((teams) => {
+            return {
+                name: teams.name,
+                image: teams.image,
+                description: teams.description,
+                players: teams.players
+            };
+        });
+
+        for (const team of data) {
+            createTeam(team);
+        }
+
+        return data;
+    } catch (error) {
+        console.log("ERROR EN preload_teams", error);
+    }
+};
+
+const preloadTournaments = async () => {
+
+    try {
+        let data = preTournaments.map((tournaments) => {
+            return {
+                name: tournaments.name,
+                image: tournaments.image,
+                teams: tournaments.teams,
+                year: tournaments.year,
+                description: tournaments.description
+            };
+        });
+
+        for (const tournament of data) {
+            createTournament(tournament);
+        }
+
+        return data;
+    } catch (error) {
+        console.log("ERROR EN preload_tournaments", error);
+    }
+};
 
 
 module.exports = {
@@ -183,6 +253,10 @@ module.exports = {
     getTeamDetails,
     getAllTournaments,
     createTournament,
-    getTournamentDetail
+    getTournamentDetail,
+    //funcionalidades preload
+    preloadPlayers,
+    preloadTeams,
+    preloadTournaments
 }
 

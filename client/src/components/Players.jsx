@@ -10,13 +10,13 @@ const Players = () => {
 
     React.useEffect(()=> {
         dispatch(actions.getAllPlayers())
-    })
+    },[dispatch])
 
     let players = useSelector(state => state.players)
 
     return (
         <div>
-            {players?players.map(e => <PlayerCard name={e.name} image={e.image}/>):false}
+            {players?players.map(e => <PlayerCard name={e.name} image={e.image} id={e.id}/>):false}
         </div>
     )
 }

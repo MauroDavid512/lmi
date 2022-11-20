@@ -24,7 +24,7 @@ const Nav = () => {
                 Barra de busqueda
             </div>
             <div>
-
+                <Link to="/lmi/home" >
                 <button onClick={methods.home}>Inicio</button>
                 <button onClick={methods.players}>Jugadores</button>
                 <button onClick={methods.teams}>Equipos</button>
@@ -32,7 +32,7 @@ const Nav = () => {
                 <button onClick={methods.games}>Juegos</button>
                 <button onClick={methods.ticket}>¡Comprar entradas!</button>
                 <button onClick={methods.contact}>Contrataciones</button>
-
+                </Link>
             </div>
         </div>
     )

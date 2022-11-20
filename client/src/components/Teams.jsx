@@ -5,19 +5,17 @@ import * as actions from '../redux/actions'
 
 const Teams = () => {
 
-
     const dispatch = useDispatch()
 
     React.useEffect(()=> {
         dispatch(actions.getAllTeams())
-    })
+    },[dispatch])
 
-    let team = useSelector(state => state.team)
-    console.log(team)
+    let team = useSelector(state => state.teams)
 
     return (
         <div>
-            {team? team.map(e => <TeamCard name={e.name} image={e.image}/>):false}
+            {team? team.map(e => <TeamCard name={e.name} image={e.image} id={e.id}/>):false}
         </div>
     )
 }

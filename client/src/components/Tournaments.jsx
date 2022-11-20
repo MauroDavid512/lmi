@@ -10,14 +10,13 @@ const Tournaments = () => {
 
     React.useEffect(()=> {
         dispatch(actions.getAllTournaments())
-    })
+    },[dispatch])
 
-    let Tournaments = useSelector(state => state.Tournaments)
-    console.log(Tournaments)
+    let tournaments = useSelector(state => state.tournaments)
 
     return (
         <div>
-            {Tournaments?Tournaments.map(e => <TournamentCard name={e.name} image={e.image}/>):false}
+            {tournaments?tournaments.map(e => <TournamentCard name={e.name} image={e.image} id={e.id}/>):false}
         </div>
     )
 }
