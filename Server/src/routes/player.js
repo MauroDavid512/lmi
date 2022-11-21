@@ -1,10 +1,20 @@
 const { Router } = require('express')
-const { getAllPlayers, createPlayer, getPlayerDetails } = require('./utils')
+const { getAllPlayers, createPlayer, getPlayerDetails, getPlayerTeams } = require('./utils')
 const router = Router();
 
 router.get("/", async (req, res) => {
     try{
         const info = await getAllPlayers()
+        res.status(200).json(info)
+    }catch(error){
+        res.status(404).json({error:error.message})
+    }
+})
+
+router.get("/teams/:id", async (req, res) => {
+    try{
+        let id = req.params.id
+        const info = await getPlayerTeams(parseInt(id))
         res.status(200).json(info)
     }catch(error){
         res.status(404).json({error:error.message})

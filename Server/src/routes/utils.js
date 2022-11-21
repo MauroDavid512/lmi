@@ -13,7 +13,7 @@ const getAllPlayers = async () => {
         const allPlayers = await Player.findAll({
             include: {
                 model: Team,
-                attributes: ['name'],
+                attributes: ['id','name', 'image'],
                 through: {
                     attributes: []
                 }
@@ -59,20 +59,13 @@ const getPlayerDetails = async (id) => {
     }
 }
 
-const getPlayerTeams = async (id) => {
-    try{
-        
-    }catch(error){
-        console.log('Error en funcion getPlayerTeams '+ error.message)
-    }
-}
 
 const getAllTeams = async () => {
     try {
         const allTeams = await Team.findAll({
             include: {
                 model: Player,
-                attributes: ['id'],
+                attributes: ['id','name','image'],
                 through: {
                     attributes: []
                 }
@@ -83,6 +76,11 @@ const getAllTeams = async () => {
         console.log("Error en función getAllTeam " + error.message)
     }
 }
+
+
+
+
+
 
 const createTeam = async (data) => {
     try {
@@ -241,15 +239,38 @@ const preloadTournaments = async () => {
             };
         });
         for (const tournament of data) {
-            console.log(tournament)
+
             createTournament(tournament);
         }
 
         return data;
     } catch (error) {
-        console.log("ERROR EN preload_tournaments", error);
+        console.log("ERROR EN preload_tournaments ", error);
     }
 };
+
+// Filtros -------------------------------------------------------
+
+
+const getPlayerTeams = async (id) => {
+    try{
+        
+        let player = await getPlayerDetails(id)
+        return player.teams
+        
+    }catch(error){
+        console.log('Error en funcion getPlayerTeams ' + error.message)
+    }
+}
+
+const getTeamPlayers = async (id) => {
+    try{
+        let team = await getTeamDetails(id)
+        return team.players
+    }catch(error){
+        console.log('Error en getTeamPlayers ' + error.message)
+    }
+}
 
 
 module.exports = {
@@ -262,6 +283,8 @@ module.exports = {
     getAllTournaments,
     createTournament,
     getTournamentDetail,
+    getPlayerTeams,
+    getTeamPlayers,
     //funcionalidades preload
     preloadPlayers,
     preloadTeams,
