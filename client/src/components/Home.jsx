@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux"
 import Init from "./Init";
-import Players from "./Players";
-import Teams from "./Teams";
-import Tournaments from "./Tournaments";
-import Games from "./Games";
+import Players from "./player/Players";
+import Teams from "./team/Teams";
+import Tournaments from "./tournament/Tournaments";
+import Games from "./games/Games";
 import Ticket from "./Ticket";
 import Contact from "./Contact";
 

@@ -7,6 +7,7 @@ const router = Router();
 const player = require('./player')
 const team = require('./team')
 const tournament = require('./tournaments')
+const game = require('./game')
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -14,6 +15,7 @@ const tournament = require('./tournaments')
 router.use('/player', player )
 router.use('/team', team)
 router.use('/tournament', tournament)
+router.use('/game', game)
 
 
 

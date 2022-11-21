@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TeamCard from "./TeamCard";
-import * as actions from '../redux/actions'
+import * as actions from '../../redux/actions'
 
 const Teams = () => {
 

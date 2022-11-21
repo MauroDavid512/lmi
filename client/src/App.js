@@ -4,9 +4,9 @@ import { Route, Routes } from "react-router-dom"
 import Home from './components/Home';
 import Landing from './components/Landing';
 import Nav from './components/Nav';
-import PlayerDetail from './components/PlayerDetail';
-import TeamDetail from './components/TeamDetail';
-import TournamentDetail from './components/TournamentDetail'
+import PlayerDetail from './components/player/PlayerDetail';
+import TeamDetail from './components/team/TeamDetail';
+import TournamentDetail from './components/tournament/TournamentDetail'
 
 
 

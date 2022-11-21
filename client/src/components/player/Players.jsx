@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PlayerCard from "./PlayerCard";
-import * as actions from "../redux/actions"
+import * as actions from "../../redux/actions"
 
 
 const Players = () => {

@@ -2,11 +2,14 @@
 
 const axios = require('axios')
 const { Player, Team, Tournament } = require('../db.js')
+const Game = require('../models/Game.js')
 
 const prePlayers = require('../preloads/players.json')
 const preTeams = require('../preloads/teams.json')
 const preTournaments = require('../preloads/tournaments.json')
 
+
+// FUNCIONES DE JUGADORES ----------------------------------------
 
 const getAllPlayers = async () => {
     try {
@@ -58,6 +61,9 @@ const getPlayerDetails = async (id) => {
         console.log('Error en función getPlayerDetails ' + error.message)
     }
 }
+
+
+// FUNCIONES DE EQUIPOS -------------------------------------------
 
 
 const getAllTeams = async () => {
@@ -119,6 +125,9 @@ const getTeamDetails = async (id) => {
     }
 }
 
+
+// FUNCIONES DE TORNEOS -----------------------------------------------------
+
 const getAllTournaments = async () => {
     try {
         const allTournaments = await Tournament.findAll({
@@ -177,8 +186,47 @@ const getTournamentDetail = async (id) => {
     }
 }
 
+// FUNCIONES DE JUEGOS ------------------------------------------------
 
+const createGame = async (data) => {
+    try {
+        const { name, description, image, type } = data
+        const allGames = getAllGames()
+        const aux = allGames.find(e => e.name === name)
+        if(aux) {
+            throw new Error('Ya existe un juego con ese nombre')
+        } else {
+            let newGame = await Game.create({
+                name,
+                description,
+                image,
+                type
+            })
+            return newGame
+        }
+    } catch(error){
+        console.log('Error en funcion createGame ---> '+ error.message)
+    }
+}
 
+const getAllGames = async () => {
+    try {
+        const allGames = await Game.bind()
+        return allGames
+    } catch (error) {
+        console.log("error en funcion getAllGames ---> " + error.message)
+    }
+}
+
+const getGameDetail = async (id) => {
+    try{
+        const allGames = getAllGames()
+        const game = allGames.filter(e => e.id === id)
+        return game[0]
+    }catch(error){
+        console.log('Error en funcion getGameDetail ---> '+error.message)
+    }
+}
 // Funciones Pre-load -------------------------------------------------->
 
 const preloadPlayers = async () => {
@@ -273,6 +321,7 @@ const getTeamPlayers = async (id) => {
 }
 
 
+
 module.exports = {
     createPlayer,
     getAllPlayers,
@@ -285,6 +334,9 @@ module.exports = {
     getTournamentDetail,
     getPlayerTeams,
     getTeamPlayers,
+    createGame,
+    getAllGames,
+    getGameDetail,
     //funcionalidades preload
     preloadPlayers,
     preloadTeams,
