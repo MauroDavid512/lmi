@@ -73,8 +73,9 @@ const getAllTeams = async () => {
                 attributes: ['id', 'name', 'image'],
                 through: {
                     attributes: []
-                }
-            }
+                },    
+            },
+            
         })
         return allTeams
     } catch (error) {
@@ -132,7 +133,7 @@ const getAllTournaments = async () => {
         const allTournaments = await Tournament.findAll({
             include: {
                 model: Team,
-                attributes: ['id'],
+                attributes: ['id','name'],
                 through: {
                     attributes: []
                 }
@@ -274,13 +275,14 @@ const preloadTeams = async () => {
 };
 
 const preloadTournaments = async () => {
-
     try {
         let data = preTournaments.map((tournaments) => {
+            let teams = tournaments.teams.map(e => parseInt(e))
+            console.log(teams)
             return {
                 name: tournaments.name,
                 image: tournaments.image,
-                teams: tournaments.teams,
+                teams: teams,
                 year: tournaments.year,
                 description: tournaments.description
             };
