@@ -4,6 +4,7 @@ import {
     TEAMS,
     TOURNAMENTS,
     GAMES,
+    GETALLGAMES,
     TICKET,
     CONTACT,
     GETALLPLAYERS,
@@ -106,6 +107,13 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tournamentDetail: action.payload
+            }
+
+            //Funcionalidades de GAMES ------------------------------------------------------
+        case GETALLGAMES:
+            return {
+                ...state,
+                games: action.payload
             }
 
 

@@ -15,7 +15,7 @@ export const TEAMDETAIL = 'TEAMDETAIL'
 export const GETALLTOURNAMENTS = 'GETALLTOURNAMENTS'
 export const TOURNAMENTDETAIL = 'TOURNAMENTDETAIL'
 export const GETALLGAMES = 'GETALLGAMES'
-export const GAMEDETAIL = 'GAMEDETAIL'
+
 
 export const selectHOME = () => {
     return function (dispatch){
@@ -111,5 +111,16 @@ export const getTournamentDetail = (id) => {
         let tournament = await axios.get(`http://localhost:3001/tournament/${id}`)
         const respuesta = tournament.data
         dispatch({ type: TOURNAMENTDETAIL, payload: respuesta})
+    }
+}
+
+
+// ----------------------------------- GAMES ACTIONS ----------------------------------------------------   
+
+export const getAllGames = () => {
+    return async function (dispatch){
+        let allTournaments = await axios.get('http://localhost:3001/game')
+        const respuesta = allTournaments.data
+        dispatch({ type: GETALLGAMES, payload: respuesta })
     }
 }

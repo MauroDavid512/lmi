@@ -15,6 +15,7 @@ const Teams = () => {
 
     return (
         <div>
+            <h1>EQUIPOS</h1>
             {team? team.map(e => <TeamCard name={e.name} image={e.image} id={e.id}/>):false}
         </div>
     )
