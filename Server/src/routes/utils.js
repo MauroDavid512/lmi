@@ -1,8 +1,7 @@
 //Aqui estarán todas las funciones que se utilizaran durante el ruteo.
 
 const axios = require('axios')
-const { Player, Team, Tournament } = require('../db.js')
-const Game = require('../models/Game.js')
+const { Player, Team, Tournament, Game } = require('../db.js')
 
 const prePlayers = require('../preloads/players.json')
 const preTeams = require('../preloads/teams.json')
@@ -16,7 +15,7 @@ const getAllPlayers = async () => {
         const allPlayers = await Player.findAll({
             include: {
                 model: Team,
-                attributes: ['id','name', 'image'],
+                attributes: ['id', 'name', 'image'],
                 through: {
                     attributes: []
                 }
@@ -71,7 +70,7 @@ const getAllTeams = async () => {
         const allTeams = await Team.findAll({
             include: {
                 model: Player,
-                attributes: ['id','name','image'],
+                attributes: ['id', 'name', 'image'],
                 through: {
                     attributes: []
                 }
@@ -174,15 +173,11 @@ const createTournament = async (data) => {
 
 const getTournamentDetail = async (id) => {
     try {
-        try {
-            const allTournaments = await getAllTournaments()
-            const tournament = allTournaments.filter((e) => e.id === id)
-            return tournament[0]
-        } catch (error) {
-            console.log('Error en función getTournamentDetails ' + error.message)
-        }
+        const allTournaments = await getAllTournaments()
+        const tournament = allTournaments.filter((e) => e.id === id)
+        return tournament[0]
     } catch (error) {
-        console.log("error en funcion getTournamentDetail ---> " + error.message)
+        console.log('Error en función getTournamentDetails ' + error.message)
     }
 }
 
@@ -190,28 +185,30 @@ const getTournamentDetail = async (id) => {
 
 const createGame = async (data) => {
     try {
-        const { name, description, image, type } = data
-        const allGames = getAllGames()
+        const { name, description, image, type, teamsNumber, playersNumber } = data
+        const allGames = await getAllGames()
         const aux = allGames.find(e => e.name === name)
-        if(aux) {
+        if (aux) {
             throw new Error('Ya existe un juego con ese nombre')
         } else {
             let newGame = await Game.create({
                 name,
                 description,
                 image,
-                type
+                type,
+                teamsNumber,
+                playersNumber
             })
             return newGame
         }
-    } catch(error){
-        console.log('Error en funcion createGame ---> '+ error.message)
+    } catch (error) {
+        console.log('Error en funcion createGame ---> ' + error.message)
     }
 }
 
 const getAllGames = async () => {
     try {
-        const allGames = await Game.bind()
+        const allGames = await Game.findAll()
         return allGames
     } catch (error) {
         console.log("error en funcion getAllGames ---> " + error.message)
@@ -219,14 +216,16 @@ const getAllGames = async () => {
 }
 
 const getGameDetail = async (id) => {
-    try{
+    try {
         const allGames = getAllGames()
         const game = allGames.filter(e => e.id === id)
         return game[0]
-    }catch(error){
-        console.log('Error en funcion getGameDetail ---> '+error.message)
+    } catch (error) {
+        console.log('Error en funcion getGameDetail ---> ' + error.message)
     }
 }
+
+
 // Funciones Pre-load -------------------------------------------------->
 
 const preloadPlayers = async () => {
@@ -301,21 +300,21 @@ const preloadTournaments = async () => {
 
 
 const getPlayerTeams = async (id) => {
-    try{
-        
+    try {
+
         let player = await getPlayerDetails(id)
         return player.teams
-        
-    }catch(error){
+
+    } catch (error) {
         console.log('Error en funcion getPlayerTeams ' + error.message)
     }
 }
 
 const getTeamPlayers = async (id) => {
-    try{
+    try {
         let team = await getTeamDetails(id)
         return team.players
-    }catch(error){
+    } catch (error) {
         console.log('Error en getTeamPlayers ' + error.message)
     }
 }

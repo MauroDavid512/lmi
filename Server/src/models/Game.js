@@ -8,6 +8,13 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    playersNumber:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    teamsNumber:{
+      type: DataTypes.INTEGER
+    },
     description:{
       type: DataTypes.TEXT,
       allowNull: false,
