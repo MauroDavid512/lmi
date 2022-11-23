@@ -6,6 +6,7 @@ const { Player, Team, Tournament, Game } = require('../db.js')
 const prePlayers = require('../preloads/players.json')
 const preTeams = require('../preloads/teams.json')
 const preTournaments = require('../preloads/tournaments.json')
+const preGames = require('../preloads/games.json')
 
 
 // FUNCIONES DE JUGADORES ----------------------------------------
@@ -248,7 +249,7 @@ const preloadPlayers = async () => {
 
         return data;
     } catch (error) {
-        console.log("ERROR EN preload_players", error);
+        console.log("ERROR EN preload_players", error.message);
     }
 };
 
@@ -270,7 +271,7 @@ const preloadTeams = async () => {
 
         return data;
     } catch (error) {
-        console.log("ERROR EN preload_teams", error);
+        console.log("ERROR EN preload_teams", error.message);
     }
 };
 
@@ -294,7 +295,31 @@ const preloadTournaments = async () => {
 
         return data;
     } catch (error) {
-        console.log("ERROR EN preload_tournaments ", error);
+        console.log("ERROR EN preload_tournaments ", error.message);
+    }
+};
+
+const preloadGames = async () => {
+
+    try {
+        let data = preGames.map((games) => {
+            return {
+                name: games.name,
+                image: games.image,
+                description: games.description,
+                teamsNumber: games.teamsNumber,
+                playersNumber: games.playersNumber,
+                type: games.type
+            };
+        });
+
+        for (const game of data) {
+            createGame(game);
+        }
+
+        return data;
+    } catch (error) {
+        console.log("ERROR EN preload_games", error.message);
     }
 };
 
@@ -341,6 +366,7 @@ module.exports = {
     //funcionalidades preload
     preloadPlayers,
     preloadTeams,
-    preloadTournaments
+    preloadTournaments,
+    preloadGames
 }
 

@@ -1,0 +1,43 @@
+[
+    {
+        "name":"Diamante",
+        "image": "https://pbs.twimg.com/profile_images/1112859900852494336/wsk2vj62_400x400.jpg",
+        "description": "Los jugadores se colocan de a dos formando un diamante de 4 puntas (2 Jugadores por punta). Se sortean estilos para cada punta. Durante la escena, el diamante gira y actuan los que quedan al frente. Deben adoptar la posición que dejan los compañeros anteriores. No tiene duración establecida",
+        "teamsNumber":4,
+        "playersNumber": 8,
+        "type": "Mixta"
+    },
+    {
+        "name":"Minuto de emociones",
+        "image": "https://pbs.twimg.com/profile_images/1112859900852494336/wsk2vj62_400x400.jpg",
+        "description": "Se lleva a cabo una escena normal en 2 minutos. Luego se le pedirá al público dos emociones y estas serán las dominantes (y únicas) emociones que atravesarán a los personajes en las siguientes dos repeticiones de la escena de 1 minuto cada una.",
+        "teamsNumber":2,
+        "playersNumber": 4,
+        "type": "Comparada"
+    },
+    {
+        "name":"Combinada",
+        "image": "https://pbs.twimg.com/profile_images/1112859900852494336/wsk2vj62_400x400.jpg",
+        "description": "Dos equipos en conjunto realizan una escena con estilo",
+        "teamsNumber":2,
+        "playersNumber": 8,
+        "type": "Mixta"
+    },
+    {
+        "name":"Más, menos, otra cosa",
+        "image": "https://pbs.twimg.com/profile_images/1112859900852494336/wsk2vj62_400x400.jpg",
+        "description": "3 jugadores en escena y uno desde fuera que de indicaciones. Los jugadores en escena deben llevar a cabo una historia y lo que hagan será modificado por el cuarto jugador al grito de MÁS (Deberán aumentar lo último que hayan hecho), MENOS (Disminuirlo), OTRA COSA (Cambiarlo rotundamente, aunque la historia cambie completamente)",
+        "teamsNumber":2,
+        "playersNumber": 4,
+        "type": "Comparada"
+    },
+    {
+        "name":"Desafío del arbitro",
+        "image": "https://pbs.twimg.com/profile_images/1112859900852494336/wsk2vj62_400x400.jpg",
+        "description": "Juego completamente elegido por el arbitro del partido. Siendo posible solo un ganador de los 4 equipos que participan",
+        "teamsNumber":4,
+        "playersNumber": 8,
+        "type": "Mixta"
+    }
+
+]

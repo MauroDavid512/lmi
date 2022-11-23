@@ -19,7 +19,7 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const { preloadPlayers, preloadTeams, preloadTournaments } = require('./src/routes/utils.js');
+const { preloadPlayers, preloadTeams, preloadTournaments, preloadGames } = require('./src/routes/utils.js');
 
 
 // Syncing all the models at once.
@@ -28,6 +28,7 @@ conn.sync({ force: true }).then(() => {
     preloadPlayers()
     preloadTeams()
     preloadTournaments()
+    preloadGames()
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 });
