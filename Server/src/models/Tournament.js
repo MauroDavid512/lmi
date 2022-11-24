@@ -24,6 +24,10 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
             allowNull: false
+        },
+        galery: {
+            type: DataTypes.ARRAY,
+            allowNull: true
         }
     })
 };
