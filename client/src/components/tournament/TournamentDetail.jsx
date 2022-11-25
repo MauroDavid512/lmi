@@ -29,6 +29,8 @@ const TournamentDetail = () => {
                     <br />
                 </NavLink>)
             : false }
+            <br />
+            {tournament.galery ? tournament.galery.map(e => <img src={e} alt={`Fotografía ${tournament.name}`} /> ) : false}
         </div>
     )
 }

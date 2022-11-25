@@ -4,6 +4,10 @@
         "image": "https://pbs.twimg.com/profile_images/1112859900852494336/wsk2vj62_400x400.jpg",
         "description": "Muchas emociones, de los mejores torneos que se han jugado!",
         "year":2022,
-        "teams": [1,2,3]
+        "teams": [1,2,3],
+        "galery": [
+            "https://scontent.fmdz2-2.fna.fbcdn.net/v/t31.18172-8/29750054_1300490053384964_2357556990980605950_o.jpg?_nc_cat=107&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeH26NDHMkLjAyTnZXLP_xYYEb_s8gEKA6IRv-zyAQoDovd3H-c6tx5XzEOtVnMD3jg&_nc_ohc=q2OloHGv8uAAX_eJvy2&_nc_ht=scontent.fmdz2-2.fna&oh=00_AfCRp5rOGVfcqvngjcfVcfUzbu479TvjPihYUZk8njV35g&oe=63A6FCF7",
+            "https://scontent.fmdz2-2.fna.fbcdn.net/v/t31.18172-8/23509223_1174028852697752_4944349935019043026_o.jpg?_nc_cat=109&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeHrPKURktpvmNCGWedTgM0yc3tg8n8MDfJze2DyfwwN8hwxHF_yxPVIJxw-gGzhuU8&_nc_ohc=uoP2KtaaPU4AX98WBHB&_nc_ht=scontent.fmdz2-2.fna&oh=00_AfDq_J1V_sqhvWRNKcVeQRXxrz3aMEAsxNo37LcpfygnGQ&oe=63A6DE08"
+        ]
     }
 ]

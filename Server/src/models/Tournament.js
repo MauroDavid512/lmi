@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         galery: {
-            type: DataTypes.ARRAY,
+            type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: true
         }
     })

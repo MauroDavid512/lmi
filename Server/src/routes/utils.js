@@ -148,7 +148,7 @@ const getAllTournaments = async () => {
 
 const createTournament = async (data) => {
     try {
-        const { name, description, image, year, teams, active } = data
+        const { name, description, image, year, teams, active, galery } = data
         const allTournaments = await getAllTournaments()
         const aux = allTournaments.find(e => e.name === name)
         let Teams = await Team.findAll({
@@ -163,7 +163,8 @@ const createTournament = async (data) => {
                 description,
                 image,
                 year,
-                active
+                active,
+                galery
             })
 
             newTournament.addTeam(Teams)
