@@ -8,22 +8,24 @@ const Games = () => {
 
     const dispatch = useDispatch()
 
-    React.useEffect(()=> {
+    React.useEffect(() => {
         dispatch(actions.getAllGames())
-    },[dispatch])
+    }, [dispatch])
 
     let games = useSelector(state => state.games)
+    let admin = useSelector(state => state.admin)
 
     return (
         <div>
-            {games?games.map(e => <GameCard
+            {admin ? <button>Agregar juego</button> : false}
+            {games ? games.map(e => <GameCard
                 name={e.name}
                 image={e.image}
                 id={e.id}
                 playersNumber={e.playersNumber}
                 teamsNumber={e.teamsNumber}
                 description={e.description}
-                 />):false}
+            />) : false}
         </div>
     )
 }

@@ -12,7 +12,8 @@ import {
     GETALLTOURNAMENTS,
     PLAYERDETAIL,
     TEAMDETAIL,
-    TOURNAMENTDETAIL
+    TOURNAMENTDETAIL,
+    ADMINON
 } from '../actions'
 
 
@@ -25,7 +26,8 @@ const initialState = {
     tournamentDetail: {},
     playerDetail: {},
     teamDetail: {},
-    gameDetail: {}
+    gameDetail: {},
+    admin: false
 
 }
 
@@ -114,6 +116,12 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 games: action.payload
+            }
+            // Funcionalidades de ADMIN ------------------------------------------------------
+        case ADMINON:
+            return {
+                ...state,
+                admin:true
             }
 
 

@@ -13,10 +13,12 @@ const Players = () => {
     },[dispatch])
 
     let players = useSelector(state => state.players)
+    let admin = useSelector(state => state.admin)
 
     return (
         <div>
             <h1>JUGADORES</h1>
+            {admin ? <button>Agregar jugador</button> : false}
             {players?players.map(e => <PlayerCard name={e.name} image={e.image} id={e.id}/>):false}
         </div>
     )

@@ -15,6 +15,7 @@ export const TEAMDETAIL = 'TEAMDETAIL'
 export const GETALLTOURNAMENTS = 'GETALLTOURNAMENTS'
 export const TOURNAMENTDETAIL = 'TOURNAMENTDETAIL'
 export const GETALLGAMES = 'GETALLGAMES'
+export const ADMINON = 'ADMINON'
 
 
 export const selectHOME = () => {
@@ -122,5 +123,15 @@ export const getAllGames = () => {
         let allTournaments = await axios.get('http://localhost:3001/game')
         const respuesta = allTournaments.data
         dispatch({ type: GETALLGAMES, payload: respuesta })
+    }
+}
+
+
+// ------------------------------  ADMIN ACTIONS ---------------------------------------------------
+
+
+export const adminOn = () => {
+    return async function (dispatch){
+        dispatch({type: ADMINON})
     }
 }

@@ -8,15 +8,17 @@ const Tournaments = () => {
 
     const dispatch = useDispatch()
 
-    React.useEffect(()=> {
+    React.useEffect(() => {
         dispatch(actions.getAllTournaments())
-    },[dispatch])
+    }, [dispatch])
 
     let tournaments = useSelector(state => state.tournaments)
+    let admin = useSelector(state => state.admin)
 
     return (
         <div>
-            {tournaments?tournaments.map(e => <TournamentCard name={e.name} image={e.image} id={e.id}/>):false}
+            {admin ? <button>Agregar torneo</button> : false}
+            {tournaments ? tournaments.map(e => <TournamentCard name={e.name} image={e.image} id={e.id} />) : false}
         </div>
     )
 }
