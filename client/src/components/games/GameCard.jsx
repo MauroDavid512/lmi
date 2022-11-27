@@ -11,7 +11,7 @@ const GameCard = (props) => {
             <br />
             <img src={props.image} alt={props.name} />
             <br />
-            <b>Improvisación de tipo {props.type}</b>
+            <b>ImprovisaciónN de tipo {props.type}</b>
             <br />
             <b>Cantidad de jugadores: </b>{props.playersNumber}
             <br />
