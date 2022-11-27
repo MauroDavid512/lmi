@@ -17,7 +17,7 @@ const GameCard = (props) => {
             <br />
             <b>Equipos: </b>{props.teamsNumber}
             <br />
-            <b>¿Cómo se juega</b>
+            <b>¿Cómo se juega?</b>
             <br />
             {props.description}
         </div>
