@@ -24,9 +24,7 @@ const PlayerDetail = () => {
             <h3>Edad: {player.age}</h3>
             <h3>Descripción: {player.description}</h3>
 
-            equipos:
-
-            {player.teams? player.teams.map(e => <TeamCard id = {e.id} name = {e.name} image = {e.image} />):false}
+            {player.teams? player.teams.map(e => <div> <p>Equipos:</p><br /><TeamCard id = {e.id} name = {e.name} image = {e.image} /> </div>): <p>Este jugador aun no tiene equipos cargados</p> }
 
         </div>
     )

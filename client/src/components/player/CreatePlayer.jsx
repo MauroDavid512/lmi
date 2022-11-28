@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../redux/actions'
@@ -36,7 +37,29 @@ const CreatePlayer = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        let playerExist = allPlayers.find(e => e.name.toLowerCase() == newPlayer.name.toLowerCase())
+        if(playerExist){
+            alert('Ya existe un/a jugador/a con ese nombre')
+        }else{
+            setErrors(validation(newPlayer))
+        }if(Object.values(errors).length > 0){
+            console.log('Errores ---> '+Object.keys(errors))
+            alert('Hay datos incorrectos o faltan datos')
+        }else{
+            axios.post('http://localhost:3001/player/create', newPlayer)
+            alert('Jugador/a creado/a')
+            setNewPlayer({
+                name: "",
+                image: "",
+                age: "",
+                birthday: "",
+                description: ""
+            })
+            setLoading(1)
+            dispatch(actions.getAllPlayers())
+        }
     }
+    
 
     const handleimg = async (e) => {
         const files = e.target.files;
@@ -96,17 +119,10 @@ const CreatePlayer = () => {
     const handleChange = (e) => {
         
         e.preventDefault()
-        if (e.target.name === "name") {
             setNewPlayer({
                 ...newPlayer,
                 [e.target.name]: e.target.value
             })
-        } else {
-            setNewPlayer({
-                ...newPlayer,
-                [e.target.name]: e.target.value
-            })
-        };
     }
 
     const handleErrors = (e) => {
@@ -132,12 +148,13 @@ const CreatePlayer = () => {
                 ...error,
                 name: "El nombre debe tener menos de 15 carácteres"
             }
-        }else{
-            error = {
-                ...error,
-                name: ""
-            }
         }
+        // else{
+        //     error = {
+        //         ...error,
+        //         name: ""
+        //     }
+        // }
         if(!data.age){
             error = {
                 ...error,
@@ -153,12 +170,13 @@ const CreatePlayer = () => {
                 ...error,
                 age: "En la edad debe haber menos de 30 carácteres"
             }
-        }else{
-            error = {
-                ...error,
-                age: ""
-            }
         }
+        // else{
+        //     error = {
+        //         ...error,
+        //         age: ""
+        //     }
+        // }
         if(!data.description){
             error = {
                 ...error,
@@ -167,19 +185,20 @@ const CreatePlayer = () => {
         }else if(data.description.length <= 15){
             error = {
                 ...error,
-                description: "El nombre debe tener más de 15 carácteres"
+                description: "La descripción debe tener más de 15 carácteres"
             }
         }else if(data.description.length > 140){
             error = {
                 ...error,
-                description: "En la edad debe haber menos de 140 carácteres"
-            }
-        }else{
-            error = {
-                ...error,
-                description: ""
+                description: "En la descripción debe haber menos de 140 carácteres"
             }
         }
+        // else{
+        //     error = {
+        //         ...error,
+        //         description: ""
+        //     }
+        // }
         return error
     }
 
@@ -187,7 +206,7 @@ const CreatePlayer = () => {
         <div>
 
             <h1>Introducir Jugador/a</h1>
-            <form onClick={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <label>Nombre del Jugador</label>
                 <br />
                 <input type="text" name="name" value={newPlayer.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}  />
