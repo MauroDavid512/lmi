@@ -148,10 +148,10 @@ const CreatePlayer = () => {
                 ...error,
                 age: "El nombre debe tener más de 1 carácteres"
             }
-        }else if(data.age.length > 20){
+        }else if(data.age.length > 30){
             error = {
                 ...error,
-                age: "En la edad debe haber menos de 20 carácteres"
+                age: "En la edad debe haber menos de 30 carácteres"
             }
         }else{
             error = {
@@ -226,7 +226,7 @@ const CreatePlayer = () => {
                 <br />
                 <label>Cumpleaños</label>
                 <br />
-                <input type="date" />
+                <input type="date" name="birthday" value={newPlayer.birthday} onChange={e => handleChange(e)} />
                 <br />
                 <label>Descripción</label>
                 <br />
