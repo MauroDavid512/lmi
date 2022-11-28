@@ -12,8 +12,7 @@ const CreatePlayer = () => {
 
     React.useEffect(() => {
         dispatch(actions.getAllPlayers())
-        console.log(img)
-    },[dispatch])
+    }, [dispatch])
 
     let allPlayers = useSelector(state => state.players)
 
@@ -28,7 +27,11 @@ const CreatePlayer = () => {
 
     const [errors, setErrors] = React.useState({})
 
-    const [img, setImg] = React.useState({})
+
+
+    const [image, setImage] = React.useState("")
+
+    const [loading, setLoading] = React.useState(1)
 
 
     const handleSubmit = (e) => {
@@ -45,10 +48,7 @@ const CreatePlayer = () => {
 
         data.append('file', files[0]);
         data.append('upload_preset', 'LigaImpro');
-        setImg({
-            ...img,
-            loading:2
-        });
+        setLoading(2);
         try {
             const res = await fetch(
                 'https://api.cloudinary.com/v1_1/maurodavid/image/upload',
@@ -64,53 +64,134 @@ const CreatePlayer = () => {
             if (size > 2000000) {
                 setErrors({
                     ...errors,
-                    img: 'El archivo es demasiado grande'});
+                    img: 'El archivo es demasiado grande'
+                });
             } else {
                 if (format === 'jpg' || format === 'png') {
-                    console.log('url de la imagen '+ file.secure_url)
                     setErrors({
-                        errors,
-                        img:""
+                        ...errors,
+                        img: ""
                     });
-                    setImg({
-                        ...img,
-                        image: file.secure_url});
-                    setImg({
-                        ...img,
-                        loading:0
-                    });
-                    console.log('Propiedad de img '+img.image)
+                    setImage(file.secure_url);
+                    setLoading(0);
                     setNewPlayer({ ...newPlayer, image: file.secure_url })
                 } else {
                     setErrors({
                         ...errors,
-                        img:'Solo se admiten archivos formato jpeg o png'});
-                    setImg({
-                        ...img,
-                        loading:1
+                        img: 'Solo se admiten archivos formato jpeg o png'
                     });
+                    setLoading(1);
                 }
             }
         } catch (error) {
             setErrors({
                 ...errors,
-                img:'Solo se admiten archivos formato jpeg o png'});
-            setImg({
-                ...img,
-                loading: 1
+                img: 'Solo se admiten archivos formato jpeg o png'
             });
+            setLoading(1);
         }
     };
 
+
+    const handleChange = (e) => {
+        
+        e.preventDefault()
+        if (e.target.name === "name") {
+            setNewPlayer({
+                ...newPlayer,
+                [e.target.name]: e.target.value
+            })
+        } else {
+            setNewPlayer({
+                ...newPlayer,
+                [e.target.name]: e.target.value
+            })
+        };
+    }
+
+    const handleErrors = (e) => {
+        e.preventDefault();
+        setErrors(validation(newPlayer));
+    }
+
+    const validation = (data) => {
+        let error = {}
+
+        if(!data.name){
+            error = {
+                ...error,
+                name: "Campo requerido"
+            }
+        }else if(data.name.length <= 2){
+            error = {
+                ...error,
+                name: "El nombre debe tener más de 2 carácteres"
+            }
+        }else if(data.name.length > 15){
+            error = {
+                ...error,
+                name: "El nombre debe tener menos de 15 carácteres"
+            }
+        }else{
+            error = {
+                ...error,
+                name: ""
+            }
+        }
+        if(!data.age){
+            error = {
+                ...error,
+                age: "Campo requerido"
+            }
+        }else if(data.age.length <= 1){
+            error = {
+                ...error,
+                age: "El nombre debe tener más de 1 carácteres"
+            }
+        }else if(data.age.length > 20){
+            error = {
+                ...error,
+                age: "En la edad debe haber menos de 20 carácteres"
+            }
+        }else{
+            error = {
+                ...error,
+                age: ""
+            }
+        }
+        if(!data.description){
+            error = {
+                ...error,
+                description: "Campo requerido"
+            }
+        }else if(data.description.length <= 15){
+            error = {
+                ...error,
+                description: "El nombre debe tener más de 15 carácteres"
+            }
+        }else if(data.description.length > 140){
+            error = {
+                ...error,
+                description: "En la edad debe haber menos de 140 carácteres"
+            }
+        }else{
+            error = {
+                ...error,
+                description: ""
+            }
+        }
+        return error
+    }
 
     return (
         <div>
 
             <h1>Introducir Jugador/a</h1>
-            <form>
+            <form onClick={handleSubmit}>
                 <label>Nombre del Jugador</label>
                 <br />
-                <input type="text" />
+                <input type="text" name="name" value={newPlayer.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}  />
+                {errors.name? errors.name : false}
                 <br />
                 <label>Fotografía</label>
                 <br />
@@ -120,17 +201,17 @@ const CreatePlayer = () => {
                     name="image"
                     onChange={(e) => handleimg(e)}
                 />
-                {img.loading === 2 ? (
+                {loading === 2 ? (
                     <p>
                         Cargando imagen...
                     </p>
                 ) : (
                     false
                 )}
-                {img.loading === 0 ? (
+                {loading === 0 ? (
                     <div>
                         <br />
-                        <img src={img.image} alt="" />
+                        <img src={image} alt="" />
                         <br />
                     </div>
                 ) : (
@@ -140,7 +221,8 @@ const CreatePlayer = () => {
                 <br />
                 <label>Edad</label>
                 <br />
-                <input type="text" />
+                <input type="text" name="age" value={newPlayer.age} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
+                {errors.age? errors.age : false}
                 <br />
                 <label>Cumpleaños</label>
                 <br />
@@ -148,7 +230,10 @@ const CreatePlayer = () => {
                 <br />
                 <label>Descripción</label>
                 <br />
-                <textarea />
+                <textarea type="text" name="description" value={newPlayer.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
+                {errors.description? errors.description : false}
+                <br />
+                <button type="submit" >Agragar a base de datos</button>
 
 
             </form>
