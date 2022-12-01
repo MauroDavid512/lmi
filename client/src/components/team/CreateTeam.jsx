@@ -142,17 +142,22 @@ const CreateTeam = () => {
 
     const selectPlayer = (e, idPlayer, name, image) => {
         e.preventDefault()
-        let aux = players.allPlayers
-        let filterPlayers = aux.filter(e => e.name !== name)
-        setPlayers({
-            ...players,
-            teamPlayers: [
-                ...players.teamPlayers,
-                { id: idPlayer, name: name, image: image }
-            ],
-            allPlayers: [...filterPlayers]
+        if(resume){
 
-        })
+        }else{
+            let aux = players.allPlayers
+            let filterPlayers = aux.filter(e => e.name !== name)
+            setPlayers({
+                ...players,
+                teamPlayers: [
+                    ...players.teamPlayers,
+                    { id: idPlayer, name: name, image: image }
+                ],
+                allPlayers: [...filterPlayers]
+    
+            })
+        }
+     
 
     }
 
@@ -181,6 +186,11 @@ const CreateTeam = () => {
             players: [...aux]
         })
         setResume(true)
+    }
+
+    const modifyData = (e) => {
+        e.preventDefault()
+        setResume(false)
     }
 
     const handleChange = (e) => {
@@ -244,7 +254,7 @@ const CreateTeam = () => {
             <form onSubmit={handleSubmit}>
                 <label>Nombre del Equipo</label>
                 <br />
-                <input type="text" name="name" value={newTeam.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)} />
+                <input type="text" name="name" disabled={resume} value={newTeam.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)} />
                 {errors.name ? errors.name : false}
                 <br />
                 <label>Logo</label>
@@ -253,6 +263,7 @@ const CreateTeam = () => {
                     id="inputFile"
                     type="file"
                     name="image"
+                    disabled={resume}
                     onChange={(e) => handleimg(e)}
                 />
                 {loading === 2 ? (
@@ -276,24 +287,25 @@ const CreateTeam = () => {
 
                 <label>Descripción</label>
                 <br />
-                <textarea type="text" name="description" value={newTeam.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)} />
+                <textarea type="text" name="description" disabled={resume} value={newTeam.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)} />
                 {errors.description ? errors.description : false}
                 <br />
                 <h2> Jugadores del equipo: </h2>
                 <br />
-                {players.teamPlayers.length > 0 ? players.teamPlayers.map(el => <div><button title="Remover jugador/a" onClick={e => removePlayer(e, el.id, el.name, el.image)}>X</button> <h5>{el.name}</h5> <br />  </div>) : <h4>Aun no se han elegido jugadores</h4>}
+                {players.teamPlayers.length > 0 ? players.teamPlayers.map(el => <div>{!resume ?<button title="Remover jugador/a" onClick={e => removePlayer(e, el.id, el.name, el.image)}>X</button>: false} <h5>{el.name}</h5> <br />  </div>) : <h4>Aun no se han elegido jugadores</h4>}
                 <br />
                 {players.teamPlayers.length < 4 && players.teamPlayers.length !== 0 ? <div>Falta{players.teamPlayers.length === 3? ` 1 jugador` : `n ${4 - players.teamPlayers.length} jugadores`} <br /><h6>Si un jugador no aparece en la lista es por que no está en base de datos, andá a "Jugadores" para sumarle</h6></div> :false}
-                {players.teamPlayers.length === 4 ? <button onClick={e => handleConfirm(e)}>Confirmar Jugadores</button> : false}
+                {players.teamPlayers.length === 4 && Object.keys(errors).length === 0 && newTeam.name !== "" && newTeam.description!== "" ? <button onClick={e => handleConfirm(e)}>Confirmar Equipo</button> : false}
                 {players.teamPlayers.length > 4 ? <div>Recordá que los equipos solo tienen hasta 4 jugadores</div> : false}
                 <br />
                 {resume ? <div><b>Nombre del equipo: </b>{newTeam.name}<br /><b>Descripción: </b>{newTeam.description}<br/><b>Jugadores: </b><ul>{players.teamPlayers.map(e => <li>{e.name}</li>)}</ul></div> : false}
                 {resume ? <button type="submit" >Agregar a base de datos</button> : false}
+                {resume ? <button onClick={e=> modifyData(e)}>Modificar datos</button> :false}
                 <br />
                 <h3>Jugadores a seleccionar:</h3>
                 <br />
 
-                {players.allPlayers.length > 0 ? players.allPlayers.map(el => <div onClick={e => selectPlayer(e, el.id, el.name, el.image)}>{el.name} <br /> <img src={el.image} alt="" /></div>) : <p>Si los jugadores no aparecen hace click <div onClick={handlePlayersList}><b>aquí</b></div></p> }
+                {players.allPlayers.length > 0 ? players.allPlayers.map(el => <div disabled={resume} onClick={e => selectPlayer(e, el.id, el.name, el.image)}>{el.name} <br /> <img src={el.image} alt="" /></div>) : <p>Si los jugadores no aparecen hace click <div onClick={handlePlayersList}><b>aquí</b></div></p> }
 
 
 

@@ -24,7 +24,7 @@ const PlayerDetail = () => {
             <h3>Edad: {player.age}</h3>
             <h3>Descripción: {player.description}</h3>
 
-            {player.teams? player.teams.map(e => <div> <p>Equipos:</p><br /><TeamCard id = {e.id} name = {e.name} image = {e.image} /> </div>): <p>Este jugador aun no tiene equipos cargados</p> }
+            {player.teams? <div> <p>Equipos:</p> {player.teams.map(e => <div> <br /><TeamCard id = {e.id} name = {e.name} image = {e.image} /> </div>)} </div>: <p>Este jugador aun no tiene equipos cargados</p> }
 
         </div>
     )
