@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TournamentCard from "./TournamentCard";
 import * as actions from '../../redux/actions'
+import CreateTournament from "./CreateTournament";
 
 const Tournaments = () => {
 
@@ -15,9 +16,17 @@ const Tournaments = () => {
     let tournaments = useSelector(state => state.tournaments)
     let admin = useSelector(state => state.admin)
 
+    const [create, setCreate] = React.useState(false)
+
+    const handleCreate = () => {
+        create?  setCreate(false) : setCreate(true)
+    }
+
+
     return (
         <div>
-            {admin ? <button>Agregar torneo</button> : false}
+            {admin ? <button title={create ? "cerrar panel" : "Agregar Equipo"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
+            {create ? <CreateTournament/>:false}
             {tournaments ? tournaments.map(e => <TournamentCard name={e.name} image={e.image} id={e.id} />) : false}
         </div>
     )
