@@ -2,20 +2,23 @@ import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../redux/actions';
-import PlayerCard from "../player/PlayerCard";
-
-
-
 
 
 const CreateTeam = () => {
 
     let dispatch = useDispatch()
 
-    React.useEffect(() => {
+
+
+    React.useEffect(()=> {
         dispatch(actions.getAllTeams())
+    }, [dispatch])
+
+    React.useEffect(() => {
         dispatch(actions.getAllPlayers())
     }, [dispatch])
+
+    
 
     let allTeams = useSelector(state => state.teams)
     let allPlayers = useSelector(state => state.players)
@@ -34,6 +37,8 @@ const CreateTeam = () => {
         teamPlayers: [],
         allPlayers: [...allPlayers]
     })
+
+
 
     const [image, setImage] = React.useState("")
 
@@ -65,6 +70,12 @@ const CreateTeam = () => {
         }
     }
 
+    const handlePlayersList = () => {
+        setPlayers({
+            teamPlayers: [],
+            allPlayers: [...allPlayers]
+        })
+    }
 
     const handleimg = async (e) => {
         const files = e.target.files;
@@ -161,6 +172,10 @@ const CreateTeam = () => {
             ...newTeam,
             players: [...aux]
         })
+        setErrors({
+            ...errors,
+            players: ""
+        })
     }
 
     const handleChange = (e) => {
@@ -212,9 +227,21 @@ const CreateTeam = () => {
                 ...error,
                 description: "En la descripción debe haber menos de 140 carácteres"
             }
+        } else if (data.players.length !== 4) {
+            error = {
+                ...error,
+                players: "Número incorrecto de jugadores"
+            }
         }
 
         return error
+    }
+
+    if(errors.players && errors.players.length === 4){
+        setErrors({
+            ...errors,
+            players: ""
+        })
     }
 
     return (
@@ -262,11 +289,14 @@ const CreateTeam = () => {
                 <br />
                 {players.teamPlayers.length > 0 ? players.teamPlayers.map(el => <div><button title="Remover jugador/a" onClick={e => removePlayer(e, el.id, el.name, el.image)}>X</button> <h5>{el.name}</h5> <br />  </div>) : <h4>Aun no se han elegido jugadores</h4>}
                 <br />
-                {players.teamPlayers.length === 4 ? <button onClick={e => handleConfirm(e)}>Confirmar Jugadores</button> : false}
+                {players.teamPlayers.length < 4 && players.teamPlayers.length !== 0 ? <div>Falta{players.teamPlayers.length === 3? ` 1 jugador` : `n ${4 - players.teamPlayers.length} jugadores`} <br /><h6>Si un jugador no aparece en la lista es por que no está en base de datos, andá a "Jugadores" para sumarle</h6></div> :false}
+                {players.teamPlayers.length === 4 ? <button onClick={e => handleConfirm(e)} >Confirmar Jugadores</button> : false}
+                {players.teamPlayers.length > 4 ? <div>Recordá que los equipos solo tienen hasta 4 jugadores</div> : false}
                 <br />
                 <h3>Jugadores a seleccionar:</h3>
                 <br />
-                {players.allPlayers ? players.allPlayers.map(el => <div onClick={e => selectPlayer(e, el.id, el.name, el.image)}>{el.name} <br /> <img src={el.image} alt="" /></div>) : false}
+
+                {players.allPlayers.length > 0 ? players.allPlayers.map(el => <div onClick={e => selectPlayer(e, el.id, el.name, el.image)}>{el.name} <br /> <img src={el.image} alt="" /></div>) : <p>Si los jugadores no aparecen hace click <div onClick={handlePlayersList}><b>aquí</b></div></p> }
                 <br />
                 <button type="submit" >Agragar a base de datos</button>
 
