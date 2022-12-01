@@ -91,7 +91,7 @@ const getAllTeams = async () => {
 
 const createTeam = async (data) => {
     try {
-        const { name, description, image, players } = data
+        const { name, description, image, players, active } = data
         const allTeams = await getAllTeams()
         const aux = allTeams.find(e => e.name === name)
         let Players = await Player.findAll({
@@ -104,7 +104,8 @@ const createTeam = async (data) => {
             let newTeam = await Team.create({
                 name,
                 description,
-                image
+                image,
+                active
             })
 
             newTeam.addPlayer(Players)

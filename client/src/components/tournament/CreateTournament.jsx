@@ -4,18 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../redux/actions'
 
 
-
-
-
 const CreateTournament = () => {
 
     let dispatch = useDispatch()
 
     React.useEffect(() => {
         dispatch(actions.getAllTournaments())
+        dispatch(actions.getAllTeams())
     }, [dispatch])
 
+
+
     let allTournaments = useSelector(state => state.tournaments)
+    let allTeams = useSelector(state => state.teams)
+
+
 
     const [newTournament, setNewTournament] = React.useState({
         name: "",
@@ -32,6 +35,14 @@ const CreateTournament = () => {
     const [image, setImage] = React.useState("")
 
     const [loading, setLoading] = React.useState(1)
+
+    const [resume, setResume] = React.useState(false)
+
+    
+    const [teams, setTeams] = React.useState({
+        tournamentTeams: [],
+        allTeams: [...allTeams]
+    })
 
 
     const handleSubmit = (e) => {
@@ -51,13 +62,25 @@ const CreateTournament = () => {
                 name: "",
                 image: "",
                 description: "",
+                year:0,
                 teams: []
             })
             setLoading(1)
+            setResume(false)
+            setTeams({
+                tournamentTeams: [],
+                allTeams: [...allTeams]
+            })
             dispatch(actions.getAllTournaments())
         }
     }
     
+    const handleTeamsList = () => {
+        setTeams({
+            tournamentTeams: [],
+            allTeams: [...allTeams]
+        })
+    }
 
     const handleimg = async (e) => {
         const files = e.target.files;
@@ -114,6 +137,62 @@ const CreateTournament = () => {
     };
 
 
+
+    
+    const selectTeam = (e, idTeam, name, image) => {
+        e.preventDefault()
+        if(resume){
+
+        }else{
+            let aux = teams.allTeams
+            let filterTeams = aux.filter(e => e.name !== name)
+            setTeams({
+                ...teams,
+                tournamentTeams: [
+                    ...teams.tournamentTeams,
+                    { id: idTeam, name: name, image: image }
+                ],
+                allTeams: [...filterTeams]
+    
+            })
+        }
+     
+
+    }
+
+    const removeTeam = (e, idTeam, name, image) => {
+        e.preventDefault()
+        let aux = teams.tournamentTeams
+        let filterTeams = aux.filter(e => e.name !== name)
+        setTeams({
+            ...teams,
+            tournamentTeams: [...filterTeams],
+            allTeams: [
+                ...teams.allTeams,
+                { id: idTeam, name: name, image: image }
+            ]
+
+        })
+
+    }
+
+    const handleConfirm = (e) => {
+        e.preventDefault()
+
+        let aux = teams.tournamentTeams.map(e => e.id)
+        setNewTournament({
+            ...newTournament,
+            teams: [...aux]
+        })
+        setResume(true)
+    }
+
+    const modifyData = (e) => {
+        e.preventDefault()
+        setResume(false)
+    }
+
+
     const handleChange = (e) => {
         
         e.preventDefault()
@@ -163,6 +242,17 @@ const CreateTournament = () => {
                 description: "En la descripción debe haber menos de 140 carácteres"
             }
         }
+        if(!data.year){
+            error = {
+                ...error,
+                year: "Campo requerido"
+            }
+        }else if(data.year < 2011){
+            error = {
+                ...error,
+                year: "No existen torneos antes del 2011"
+            }
+        }
 
         return error
     }
@@ -174,7 +264,7 @@ const CreateTournament = () => {
             <form onSubmit={handleSubmit}>
                 <label>Nombre del Torneo</label>
                 <br />
-                <input type="text" name="name" value={newTournament.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}  />
+                <input type="text" name="name" disabled={resume} value={newTournament.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}  />
                 {errors.name? errors.name : false}
                 <br />
                 <label>Logo</label>
@@ -184,6 +274,7 @@ const CreateTournament = () => {
                     type="file"
                     name="image"
                     onChange={(e) => handleimg(e)}
+                    disabled={resume}
                 />
                 {loading === 2 ? (
                     <p>
@@ -203,12 +294,32 @@ const CreateTournament = () => {
                 )}
                 {errors.img ? errors.img : false}
                 <br />
+                <label >Año</label>
+                <br />
+                <input type="number" name="year" disabled={resume} value={newTournament.year} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
+                {errors.year? errors.year : false}
+                <br />
                 <label>Descripción</label>
                 <br />
-                <textarea type="text" name="description" value={newTournament.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
+                <textarea type="text" name="description" disabled={resume} value={newTournament.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
                 {errors.description? errors.description : false}
                 <br />
-                <button type="submit" >Agragar a base de datos</button>
+                <br />
+                <h2> Equipos en el torneo: </h2>
+                <br />
+                {teams.tournamentTeams.length > 0 ? teams.tournamentTeams.map(el => <div>{!resume ?<button title="Remover equipo" onClick={e => removeTeam(e, el.id, el.name, el.image)}>X</button>: false} <h5>{el.name}</h5> <br />  </div>) : <h4>Aun no se han elegido equipos</h4>}
+                <br />
+                <h6>Si un equipo no aparece en la lista es por que no está en base de datos, andá a "Equipos" para sumarlo</h6>
+                {Object.keys(errors).length === 0 && newTournament.name !== "" && newTournament.description!== "" && teams.tournamentTeams.length > 1 ?<button onClick={e => handleConfirm(e)} >Confirmar Torneo</button> : false}
+                {resume ? <div><b>Nombre del torneo: </b>{newTournament.name}<br /><b>Descripción: </b>{newTournament.description}<br/><b>Equipos: </b><ul>{teams.tournamentTeams.map(e => <li>{e.name}</li>)}</ul></div> : false}
+                {resume ? <button type="submit" >Agregar a base de datos</button> : false}
+                {resume ? <button onClick={e=> modifyData(e)}>Modificar datos</button> :false}
+                <br />
+                <h3>Equipos a seleccionar:</h3>
+                <br />
+
+                {teams.allTeams.length > 0 ? teams.allTeams.map(el => <div onClick={e => selectTeam(e, el.id, el.name, el.image)}>{el.name} <br /> <img src={el.image} alt="" /></div>) : <p>Si los equipos no aparecen hace click <div onClick={handleTeamsList}><b>aquí</b></div></p> }
+
 
 
             </form>

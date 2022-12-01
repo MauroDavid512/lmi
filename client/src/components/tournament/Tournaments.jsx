@@ -25,6 +25,7 @@ const Tournaments = () => {
 
     return (
         <div>
+            <h1>TORNEOS</h1>
             {admin ? <button title={create ? "cerrar panel" : "Agregar Equipo"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
             {create ? <CreateTournament/>:false}
             {tournaments ? tournaments.map(e => <TournamentCard name={e.name} image={e.image} id={e.id} />) : false}

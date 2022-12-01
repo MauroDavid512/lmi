@@ -8,8 +8,6 @@ const CreateTeam = () => {
 
     let dispatch = useDispatch()
 
-
-
     React.useEffect(()=> {
         dispatch(actions.getAllTeams())
     }, [dispatch])
@@ -305,7 +303,7 @@ const CreateTeam = () => {
                 <h3>Jugadores a seleccionar:</h3>
                 <br />
 
-                {players.allPlayers.length > 0 ? players.allPlayers.map(el => <div disabled={resume} onClick={e => selectPlayer(e, el.id, el.name, el.image)}>{el.name} <br /> <img src={el.image} alt="" /></div>) : <p>Si los jugadores no aparecen hace click <div onClick={handlePlayersList}><b>aquí</b></div></p> }
+                {players.allPlayers.length > 0 ? players.allPlayers.map(el => <div onClick={e => selectPlayer(e, el.id, el.name, el.image)}>{el.name} <br /> <img src={el.image} alt="" /></div>) : <p>Si los jugadores no aparecen hace click <div onClick={handlePlayersList}><b>aquí</b></div></p> }
 
 
 
