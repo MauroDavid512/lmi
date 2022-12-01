@@ -16,6 +16,7 @@ const CreateTeam = () => {
 
     React.useEffect(() => {
         dispatch(actions.getAllPlayers())
+        handlePlayersList()
     }, [dispatch])
 
     
@@ -44,6 +45,8 @@ const CreateTeam = () => {
 
     const [loading, setLoading] = React.useState(1)
 
+    const [resume, setResume] = React.useState(false)
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -53,7 +56,7 @@ const CreateTeam = () => {
         } else {
             setErrors(validation(newTeam))
         } if (Object.values(errors).length > 0) {
-            console.log('Errores ---> ' + Object.keys(errors))
+            console.log('Errores ---> ' + Object.values(errors))
             alert('Hay datos incorrectos o faltan datos')
         } else {
             console.log('NewTeam submit: '+newTeam.players)
@@ -66,6 +69,11 @@ const CreateTeam = () => {
                 players: []
             })
             setLoading(1)
+            setResume(false)
+            setPlayers({
+                teamPlayers: [],
+                allPlayers: [...allPlayers]
+            })
             dispatch(actions.getAllTeams())
         }
     }
@@ -172,10 +180,7 @@ const CreateTeam = () => {
             ...newTeam,
             players: [...aux]
         })
-        setErrors({
-            ...errors,
-            players: ""
-        })
+        setResume(true)
     }
 
     const handleChange = (e) => {
@@ -227,21 +232,9 @@ const CreateTeam = () => {
                 ...error,
                 description: "En la descripción debe haber menos de 140 carácteres"
             }
-        } else if (data.players.length !== 4) {
-            error = {
-                ...error,
-                players: "Número incorrecto de jugadores"
-            }
         }
 
         return error
-    }
-
-    if(errors.players && errors.players.length === 4){
-        setErrors({
-            ...errors,
-            players: ""
-        })
     }
 
     return (
@@ -280,6 +273,7 @@ const CreateTeam = () => {
                 )}
                 {errors.img ? errors.img : false}
                 <br />
+
                 <label>Descripción</label>
                 <br />
                 <textarea type="text" name="description" value={newTeam.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)} />
@@ -290,15 +284,17 @@ const CreateTeam = () => {
                 {players.teamPlayers.length > 0 ? players.teamPlayers.map(el => <div><button title="Remover jugador/a" onClick={e => removePlayer(e, el.id, el.name, el.image)}>X</button> <h5>{el.name}</h5> <br />  </div>) : <h4>Aun no se han elegido jugadores</h4>}
                 <br />
                 {players.teamPlayers.length < 4 && players.teamPlayers.length !== 0 ? <div>Falta{players.teamPlayers.length === 3? ` 1 jugador` : `n ${4 - players.teamPlayers.length} jugadores`} <br /><h6>Si un jugador no aparece en la lista es por que no está en base de datos, andá a "Jugadores" para sumarle</h6></div> :false}
-                {players.teamPlayers.length === 4 ? <button onClick={e => handleConfirm(e)} >Confirmar Jugadores</button> : false}
+                {players.teamPlayers.length === 4 ? <button onClick={e => handleConfirm(e)}>Confirmar Jugadores</button> : false}
                 {players.teamPlayers.length > 4 ? <div>Recordá que los equipos solo tienen hasta 4 jugadores</div> : false}
+                <br />
+                {resume ? <div><b>Nombre del equipo: </b>{newTeam.name}<br /><b>Descripción: </b>{newTeam.description}<br/><b>Jugadores: </b><ul>{players.teamPlayers.map(e => <li>{e.name}</li>)}</ul></div> : false}
+                {resume ? <button type="submit" >Agregar a base de datos</button> : false}
                 <br />
                 <h3>Jugadores a seleccionar:</h3>
                 <br />
 
                 {players.allPlayers.length > 0 ? players.allPlayers.map(el => <div onClick={e => selectPlayer(e, el.id, el.name, el.image)}>{el.name} <br /> <img src={el.image} alt="" /></div>) : <p>Si los jugadores no aparecen hace click <div onClick={handlePlayersList}><b>aquí</b></div></p> }
-                <br />
-                <button type="submit" >Agragar a base de datos</button>
+
 
 
             </form>
