@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GameCard from "./GameCard";
+import CreateGame from "./CreateGame";
 import * as actions from "../../redux/actions"
 
 
@@ -15,13 +16,22 @@ const Games = () => {
     let games = useSelector(state => state.games)
     let admin = useSelector(state => state.admin)
 
+    const [create, setCreate] = React.useState(false)
+
+    const handleCreate = () => {
+        create ? setCreate(false) : setCreate(true)
+    }
+
+
     return (
         <div>
-            {admin ? <button>Agregar juego</button> : false}
+            {admin ? <button title={create ? "cerrar panel" : "Agregar Juego"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
+            {create ? <CreateGame /> : false}
             {games ? games.map(e => <GameCard
                 name={e.name}
                 image={e.image}
                 id={e.id}
+                type={e.type}
                 playersNumber={e.playersNumber}
                 teamsNumber={e.teamsNumber}
                 description={e.description}

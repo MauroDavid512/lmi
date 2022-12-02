@@ -22,19 +22,28 @@ const CreateGame = () => {
         image: "",
         description: "",
         type: "",
-        playersNumber: 0,
-        teamsNumber: ""
+        playersNumber: 2,
+        teamsNumber: 2
     })
 
 
     const [errors, setErrors] = React.useState({})
 
-
-
     const [image, setImage] = React.useState("")
 
     const [loading, setLoading] = React.useState(1)
 
+    const optionsPlayers = []
+
+    for(let i = 1; i<16; i++){
+        optionsPlayers.push(i+1)
+    }
+
+    const optionsTeams = []
+
+    for(let i = 1; i<4; i++){
+        optionsTeams.push(i+1)
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -47,15 +56,15 @@ const CreateGame = () => {
             console.log('Errores ---> '+Object.keys(errors))
             alert('Hay datos incorrectos o faltan datos')
         }else{
-            axios.post('http://localhost:3001/player/create', newGame)
-            alert('Jugador/a creado/a')
-            setNewPlayer({
+            axios.post('http://localhost:3001/game/create', newGame)
+            alert('Juego Creado')
+            setNewGame({
                 name: "",
                 image: "",
                 description: "",
                 type: "",
-                playersNumber: 0,
-                teamsNumber: ""
+                playersNumber: 2,
+                teamsNumber: 2
             })
             setLoading(1)
             dispatch(actions.getAllGames())
@@ -99,7 +108,7 @@ const CreateGame = () => {
                     });
                     setImage(file.secure_url);
                     setLoading(0);
-                    setNewPlayer({ ...newGame, image: file.secure_url })
+                    setNewGame({ ...newGame, image: file.secure_url })
                 } else {
                     setErrors({
                         ...errors,
@@ -131,6 +140,7 @@ const CreateGame = () => {
         e.preventDefault();
         setErrors(validation(newGame));
     }
+
 
     const validation = (data) => {
         let error = {}
@@ -167,39 +177,17 @@ const CreateGame = () => {
                 description: "En la descripción debe haber menos de 300 carácteres"
             }
         }
-        if(!data.playersNumber){
-            error = {
-                ...error,
-                playersNumber: "Campo requerido"
-            }
-        }else if(data.playersNumber < 1 || data.playersNumber > 16){
-            error = {
-                ...error,
-                playersNumber: "Número invalido"
-            }
-        }
-        if(!data.teamsNumber){
-            error = {
-                ...error,
-                teamsNumber: "Campo requerido"
-            }
-        }else if(data.teamsNumber < 1 || data.teamsNumber > 4){
-            error = {
-                ...error,
-                teamsNumber: "Número invalido"
-            }
-        }
         return error
     }
 
     return (
         <div>
 
-            <h1>Introducir Jugador/a</h1>
+            <h1>Crear Juego</h1>
             <form onSubmit={handleSubmit}>
-                <label>Nombre del Jugador</label>
+                <label>Nombre del Juego</label>
                 <br />
-                <input type="text" name="name" value={newPlayer.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}  />
+                <input type="text" name="name" value={newGame.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}  />
                 {errors.name? errors.name : false}
                 <br />
                 <label>Fotografía</label>
@@ -228,20 +216,27 @@ const CreateGame = () => {
                 )}
                 {errors.img ? errors.img : false}
                 <br />
-                <label>Edad</label>
-                <br />
-                <input type="text" name="age" value={newPlayer.age} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
-                {errors.age? errors.age : false}
-                <br />
-                <label>Cumpleaños</label>
-                <br />
-                <input type="date" name="birthday" value={newPlayer.birthday} onChange={e => handleChange(e)} />
-                <br />
                 <label>Descripción</label>
                 <br />
-                <textarea type="text" name="description" value={newPlayer.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
+                <textarea type="text" name="description" value={newGame.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
                 {errors.description? errors.description : false}
                 <br />
+                <label>Cantidad de jugadores: </label>
+                <select name="playersNumber" value={newGame.playersNumber} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}>
+                    {optionsPlayers.map(e=> <option value={e}>{e}</option>)}
+                </select>
+                <br />
+                <label>Cantidad de equipos: </label>
+                <select name="teamsNumber" value={newGame.teamsNumber} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}>
+                    {optionsTeams.map(e=> <option value={e}>{e}</option>)}
+                </select>
+                <br />
+                <select name="type" value={newGame.type} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}>
+                    <option value="Comparada">Comparada</option>
+                    <option value="Combinada">Combinada</option>
+                    <option value="Mixta">Mixta</option>
+                    <option value="Continua">Continua</option>
+                </select>
                 <button type="submit" >Agragar a base de datos</button>
 
 
@@ -251,4 +246,4 @@ const CreateGame = () => {
 
 }
 
-export default CreatePlayer
+export default CreateGame
