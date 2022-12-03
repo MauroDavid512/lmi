@@ -25,6 +25,7 @@ const Games = () => {
 
     return (
         <div>
+            <h1>JUEGOS</h1>
             {admin ? <button title={create ? "cerrar panel" : "Agregar Juego"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
             {create ? <CreateGame /> : false}
             {games ? games.map(e => <GameCard

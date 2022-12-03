@@ -241,6 +241,7 @@ const CreateGame = () => {
 
 
             </form>
+            <hr />
         </div>
     )
 

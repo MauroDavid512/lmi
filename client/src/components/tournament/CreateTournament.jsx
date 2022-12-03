@@ -323,6 +323,7 @@ const CreateTournament = () => {
 
 
             </form>
+            <hr />
         </div>
     )
 

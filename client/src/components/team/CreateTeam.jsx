@@ -308,6 +308,7 @@ const CreateTeam = () => {
 
 
             </form>
+            <hr />
         </div>
     )
 

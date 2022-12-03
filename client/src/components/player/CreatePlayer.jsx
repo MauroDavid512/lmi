@@ -256,6 +256,7 @@ const CreatePlayer = () => {
 
 
             </form>
+            <hr />
         </div>
     )
 
