@@ -220,10 +220,10 @@ const CreateTournament = () => {
                 ...error,
                 name: "El nombre debe tener más de 2 carácteres"
             }
-        }else if(data.name.length > 15){
+        }else if(data.name.length > 30){
             error = {
                 ...error,
-                name: "El nombre debe tener menos de 15 carácteres"
+                name: "El nombre debe tener menos de 30 carácteres"
             }
         }
         if(!data.description){
