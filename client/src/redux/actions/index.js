@@ -16,6 +16,7 @@ export const GETALLTOURNAMENTS = 'GETALLTOURNAMENTS'
 export const TOURNAMENTDETAIL = 'TOURNAMENTDETAIL'
 export const GETALLGAMES = 'GETALLGAMES'
 export const ADMINON = 'ADMINON'
+export const ADMINOFF = 'ADMINOFF'
 
 
 export const selectHOME = () => {
@@ -133,5 +134,11 @@ export const getAllGames = () => {
 export const adminOn = () => {
     return async function (dispatch){
         dispatch({type: ADMINON})
+    }
+}
+
+export const adminOff = () => {
+    return async function (dispatch){
+        dispatch({type: ADMINOFF})
     }
 }
