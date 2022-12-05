@@ -58,6 +58,7 @@ const PlayerDetail = () => {
                 ...edit,
                 [prop]: true
             })
+            setErrors(validation(value));
         }
         
 
@@ -128,6 +129,68 @@ const PlayerDetail = () => {
         }
     };
 
+    const handleErrors = (e) => {
+        e.preventDefault();
+        setErrors(validation(value));
+    }
+
+    const validation = (data) => {
+        let error = {}
+
+        if(!data.name){
+            error = {
+                ...error,
+                name: "Campo requerido"
+            }
+        }else if(data.name.length <= 2){
+            error = {
+                ...error,
+                name: "El nombre debe tener más de 2 carácteres"
+            }
+        }else if(data.name.length > 15){
+            error = {
+                ...error,
+                name: "El nombre debe tener menos de 15 carácteres"
+            }
+        }
+
+        if(!data.age){
+            error = {
+                ...error,
+                age: "Campo requerido"
+            }
+        }else if(data.age.length <= 1){
+            error = {
+                ...error,
+                age: "El nombre debe tener más de 1 carácteres"
+            }
+        }else if(data.age.length > 30){
+            error = {
+                ...error,
+                age: "En la edad debe haber menos de 30 carácteres"
+            }
+        }
+
+        if(!data.description){
+            error = {
+                ...error,
+                description: "Campo requerido"
+            }
+        }else if(data.description.length <= 15){
+            error = {
+                ...error,
+                description: "La descripción debe tener más de 15 carácteres"
+            }
+        }else if(data.description.length > 140){
+            error = {
+                ...error,
+                description: "En la descripción debe haber menos de 140 carácteres"
+            }
+        }
+
+        return error
+    }
+
     const handleSubmitChange = (e, prop) => {
         e.preventDefault()
         let change = {
@@ -147,8 +210,9 @@ const PlayerDetail = () => {
 
     return (
         <div>
-            <img src={player.image} alt="" />           
-            {admin? <button onClick={e=> handleEditOn(e, "image")}>{edit.image? "Cancelar": "Editar"}</button> : false}
+            <img src={player.image} alt="" />
+            <br />
+            {admin? <button onClick={e=> handleEditOn(e, "image")}>{edit.image? "Cancelar": "Cambiar imagen"}</button> : false}
             {admin && edit.image ? <div><input
                     id="inputFile"
                     type="file"
@@ -172,18 +236,26 @@ const PlayerDetail = () => {
                     false
                 )}
                 {errors.img ? errors.img : false}<br /><button onClick={e => handleSubmitChange(e, "image")}>Guardar cambios</button></div> : false}
+
+
             <h1>{player.name}</h1>
             {admin? <button onClick={e=> handleEditOn(e, "name")}>{edit.name? "Cancelar": "Editar"}</button> : false}
-            {admin && edit.name ? <div><input type="text" name="name" value={value.name} onChange={e => handleChange(e)}/><br /><button onClick={e => handleSubmitChange(e, "name")}>Guardar cambios</button></div> : false}
+            {admin && edit.name ? <div><input type="text" name="name" value={value.name} onChange={e => handleChange(e)} onKeyUp={e=>handleErrors(e)}/><br />{errors.name? errors.name : false}<button onClick={e => handleSubmitChange(e, "name")}>Guardar cambios</button></div> : false}
+
+
             <h3>Cumpleañito: {player.birthday}</h3>
             {admin? <button onClick={e=> handleEditOn(e, "birthday")}>{edit.birthday? "Cancelar": "Editar"}</button> : false}
-            {admin && edit.birthday ? <div><input type="date" name="birthday" value={value.birthday} onChange={e => handleChange(e)}/><br /><button onClick={e => handleSubmitChange(e, "birthday")}>Guardar cambios</button></div> : false}
+            {admin && edit.birthday ? <div><input type="date" name="birthday" value={value.birthday} onChange={e => handleChange(e)} /><br /><button onClick={e => handleSubmitChange(e, "birthday")}>Guardar cambios</button></div> : false}
+            
+            
             <h3>Edad: {player.age}</h3>
             {admin? <button onClick={e=> handleEditOn(e, "age")}>{edit.age? "Cancelar": "Editar"}</button> : false}
-            {admin && edit.age ? <div><input type="text" name="age" value={value.age} onChange={e => handleChange(e)}/><br /><button onClick={e => handleSubmitChange(e, "age")}>Guardar cambios</button></div> : false}
+            {admin && edit.age ? <div><input type="text" name="age" value={value.age} onChange={e => handleChange(e)} onKeyUp={e=>handleErrors(e)}/><br />{errors.age? errors.age : false}<button onClick={e => handleSubmitChange(e, "age")}>Guardar cambios</button></div> : false}
+            
+            
             <h3>Descripción: {player.description}</h3>
             {admin? <button onClick={e=> handleEditOn(e, "description")}>{edit.description? "Cancelar": "Editar"}</button> : false}
-            {admin && edit.description ? <div><textarea name="description"  value={value.description} onChange={e => handleChange(e)}/><br /><button onClick={e => handleSubmitChange(e, "description")}>Guardar cambios</button></div> : false}
+            {admin && edit.description ? <div><textarea name="description"  value={value.description} onChange={e => handleChange(e)} onKeyUp={e=>handleErrors(e)}/><br />{errors.description? errors.description : false}<button onClick={e => handleSubmitChange(e, "description")}>Guardar cambios</button></div> : false}
 
             {player.teams? <div> <p>Equipos:</p> {player.teams.map(e => <div> <br /><TeamCard id = {e.id} name = {e.name} image = {e.image} /> </div>)} </div>: <p>Este jugador aun no tiene equipos cargados</p> }
 
