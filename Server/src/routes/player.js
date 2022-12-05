@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { getAllPlayers, createPlayer, getPlayerDetails, getPlayerTeams } = require('./utils')
+const { getAllPlayers, createPlayer, getPlayerDetails, getPlayerTeams, updatePlayer } = require('./utils')
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -28,6 +28,17 @@ router.post("/create", async (req, res) => {
         res.status(201).json(createdPlayer)
     }catch(error){
         res.status(400).json({error:error.message})
+    }
+})
+
+router.put("/update/:id", async (req, res) => {
+    try{
+        const data = req.body
+        const id = req.params.id
+        const info = await updatePlayer(parseInt(id), data)
+        res.status(200).json(info)
+    }catch(error){
+        res.status(400).json({error: error.message})
     }
 })
 

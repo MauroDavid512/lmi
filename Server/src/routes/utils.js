@@ -62,6 +62,20 @@ const getPlayerDetails = async (id) => {
     }
 }
 
+const updatePlayer = async (id, data) => {
+    try {
+        const allPlayers = await getAllPlayers()
+        const player = allPlayers.filter((e) => e.id === id)
+        console.log(player)
+        await player[0].update({
+            ...player,
+            ...data
+        })
+    } catch (error) {
+        console.log('Error en función updatePlayer ' + error.message)
+    }
+}
+
 
 // FUNCIONES DE EQUIPOS -------------------------------------------
 
@@ -127,6 +141,19 @@ const getTeamDetails = async (id) => {
     }
 }
 
+const updateTeam = async (id, data) => {
+    try {
+        const allTeams = await getAllTeams()
+        const team = allTeams.filter((e) => e.id === id)
+        console.log(team)
+        await team[0].update({
+            ...team,
+            ...data
+        })
+    } catch (error) {
+        console.log('Error en función updateTeam ' + error.message)
+    }
+}
 
 // FUNCIONES DE TORNEOS -----------------------------------------------------
 
@@ -183,6 +210,20 @@ const getTournamentDetail = async (id) => {
         return tournament[0]
     } catch (error) {
         console.log('Error en función getTournamentDetails ' + error.message)
+    }
+}
+
+const updateTournament = async (id, data) => {
+    try {
+        const allTournaments = await getAllTournaments()
+        const tournament = allTournaments.filter((e) => e.id === id)
+        console.log(tournament)
+        await tournament[0].update({
+            ...tournament,
+            ...data
+        })
+    } catch (error) {
+        console.log('Error en función updateTournament ' + error.message)
     }
 }
 
@@ -355,12 +396,15 @@ module.exports = {
     createPlayer,
     getAllPlayers,
     getPlayerDetails,
+    updatePlayer,
     getAllTeams,
     createTeam,
     getTeamDetails,
+    updateTeam,
     getAllTournaments,
     createTournament,
     getTournamentDetail,
+    updateTournament,
     getPlayerTeams,
     getTeamPlayers,
     createGame,
