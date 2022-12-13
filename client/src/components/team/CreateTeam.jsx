@@ -218,10 +218,10 @@ const CreateTeam = () => {
                 ...error,
                 name: "El nombre debe tener más de 2 carácteres"
             }
-        } else if (data.name.length > 15) {
+        } else if (data.name.length > 25) {
             error = {
                 ...error,
-                name: "El nombre debe tener menos de 15 carácteres"
+                name: "El nombre debe tener menos de 25 carácteres"
             }
         }
 

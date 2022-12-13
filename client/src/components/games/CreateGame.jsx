@@ -237,7 +237,9 @@ const CreateGame = () => {
                     <option value="Mixta">Mixta</option>
                     <option value="Continua">Continua</option>
                 </select>
-                <button type="submit" >Agragar a base de datos</button>
+                <br />
+                {newGame.name !== "" ? <button type="submit" >Agragar a base de datos</button> : false}
+                
 
 
             </form>
