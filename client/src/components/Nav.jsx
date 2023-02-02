@@ -23,16 +23,16 @@ const Nav = () => {
             <div>
                 Barra de busqueda
             </div>
-            <div>
-                <Link to="/lmi/home" >
-                <button onClick={methods.home}>Inicio</button>
-                <button onClick={methods.players}>Jugadores</button>
-                <button onClick={methods.teams}>Equipos</button>
-                <button onClick={methods.tournaments}>Torneos</button>
-                <button onClick={methods.games}>Juegos</button>
-                <button onClick={methods.ticket}>¡Comprar entradas!</button>
-                <button onClick={methods.contact}>Contrataciones</button>
-                </Link>
+            <div class="center">
+            <div class="nav">
+                <div class="navoption" onClick={methods.home}>Inicio</div>
+                <div class="navoption" onClick={methods.players}>Jugadores</div>
+                <div class="navoption" onClick={methods.teams}>Equipos</div>
+                <div class="navoption" onClick={methods.tournaments}>Torneos</div>
+                <div class="navoption" onClick={methods.games}>Juegos</div>
+                <div class="navoption" onClick={methods.ticket}>¡Comprar entradas!</div>
+                <div class="navoption" onClick={methods.contact}>Contrataciones</div>
+            </div>
             </div>
         </div>
     )

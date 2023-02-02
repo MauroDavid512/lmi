@@ -19,13 +19,15 @@ const TournamentDetail = () => {
     const [edit, setEdit] = React.useState({
         name:false,
         image:false,
-        description:false
+        description:false,
+        galery: false
     })
 
     const [value, setValue] = React.useState({
         name:"",
         image:"",
-        description:""
+        description:"",
+        galery: []
     })
 
     const [image, setImage] = React.useState("")
@@ -33,6 +35,8 @@ const TournamentDetail = () => {
     const [loading, setLoading] = React.useState(1)
 
     const [errors, setErrors] = React.useState({})
+
+    const [galery, setGalery] = React.useState([])
     
     const handleEditOn = (e, prop) => {
         e.preventDefault() 
@@ -121,6 +125,60 @@ const TournamentDetail = () => {
         }
     };
 
+    const handleGalery = async (e) => {
+        const files = e.target.files;
+        const data = new FormData();
+        let size = 0;
+        if (files) {
+            size += files[0].size;
+        }
+
+        data.append('file', files[0]);
+        data.append('upload_preset', 'LigaImpro');
+        try {
+            const res = await fetch(
+                'https://api.cloudinary.com/v1_1/maurodavid/image/upload',
+                {
+                    method: 'POST',
+                    body: data
+                }
+            );
+            const file = await res.json();
+            let array = file.secure_url.split('.');
+            let format = array[array.length - 1];
+
+            if (size > 2000000) {
+                setErrors({
+                    ...errors,
+                    img: 'El archivo es demasiado grande'
+                });
+            } else {
+                if (format === 'jpg' || format === 'png') {
+                    setErrors({
+                        ...errors,
+                        img: ""
+                    });
+                    setGalery([...galery, file.secure_url]);
+                    setValue({
+                        ...value,
+                        galery: [...value.galery, file.secure_url]
+                    })
+                } else {
+                    setErrors({
+                        ...errors,
+                        img: 'Solo se admiten archivos formato jpeg o png'
+                    });
+                }
+            }
+        } catch (error) {
+            setErrors({
+                ...errors,
+                img: 'Solo se admiten archivos formato jpeg o png'
+            });
+
+        }
+    }
+
     const handleErrors = (e) => {
         e.preventDefault();
         setErrors(validation(value));
@@ -188,8 +246,42 @@ const TournamentDetail = () => {
     return (
         <div>
             <img src={tournament.image} alt="" />
+
+            <br />
+            {admin? <button onClick={e=> handleEditOn(e, "image")}>{edit.image? "Cancelar": "Cambiar imagen"}</button> : false}
+            {admin && edit.image ? <div><input
+                    id="inputFile"
+                    type="file"
+                    name="image"
+                    onChange={(e) => handleimg(e)}
+                />
+                {loading === 2 ? (
+                    <p>
+                        Cargando imagen...
+                    </p>
+                ) : (
+                    false
+                )}
+                {loading === 0 ? (
+                    <div>
+                        <br />
+                        <img src={image} alt="" />
+                        <br />
+                    </div>
+                ) : (
+                    false
+                )}
+                {errors.img ? errors.img : false}<br /><button onClick={e => handleSubmitChange(e, "image")}>Guardar cambios</button></div> : false}
+            <br />
             <h1>{tournament.name}</h1>
+            <br />
+            {admin? <button onClick={e=> handleEditOn(e, "name")}>{edit.name? "Cancelar": "Editar"}</button> : false}
+            {admin && edit.name ? <div><input type="text" name="name" value={value.name} onChange={e => handleChange(e)} onKeyUp={e=>handleErrors(e)}/><br />{errors.name? errors.name : false}<button onClick={e => handleSubmitChange(e, "name")}>Guardar cambios</button></div> : false}
+            <br />
             <h2>{tournament.description}</h2>
+            <br />
+            {admin? <button onClick={e=> handleEditOn(e, "description")}>{edit.name? "Cancelar": "Editar"}</button> : false}
+            {admin && edit.description ? <div><textarea name="description" value={value.description} onChange={e => handleChange(e)} onKeyUp={e=>handleErrors(e)}/><br />{errors.description? errors.description : false}<button onClick={e => handleSubmitChange(e, "description")}>Guardar cambios</button></div> : false}
 
             <br />
             <b>Equipos que participaron</b>
@@ -202,6 +294,14 @@ const TournamentDetail = () => {
             : false }
             <br />
             {tournament.galery ? tournament.galery.map(e => <img src={e} alt={`Fotografía ${tournament.name}`} /> ) : false}
+            {admin? <button onClick={e => handleEditOn(e, "galery")}>Agregar Foto a Galeria</button> : false}
+            {admin && edit.galery ? <div><input
+                    id="inputFile"
+                    type="file"
+                    name="image"
+                    onChange={(e) => handleGalery(e)}
+                /> <br /><button onClick={e => handleSubmitChange(e, "galery")}>Agregar Foto</button> </div>: false }
+                
         </div>
     )
 }
