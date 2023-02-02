@@ -25,9 +25,11 @@ const Games = () => {
 
     return (
         <div>
-            <h1>JUEGOS</h1>
+            <h1 class="letras">JUEGOS</h1>
             {admin ? <button title={create ? "cerrar panel" : "Agregar Juego"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
             {create ? <CreateGame /> : false}
+            <div class="center">
+            <div class="playerContainer">
             {games ? games.map(e => <GameCard
                 name={e.name}
                 image={e.image}
@@ -37,6 +39,8 @@ const Games = () => {
                 teamsNumber={e.teamsNumber}
                 description={e.description}
             />) : false}
+            </div>
+            </div>
         </div>
     )
 }

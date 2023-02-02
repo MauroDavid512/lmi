@@ -6,7 +6,7 @@ const PlayerCard = (props) => {
 
 
     return (
-        <NavLink to={`/lmi/player/${props.id}`}>
+        <NavLink class="decorationNone" to={`/lmi/player/${props.id}`}>
             <div class="flip-card">
     <div class="flip-card-inner">
         <div class="flip-card-front">
@@ -15,8 +15,8 @@ const PlayerCard = (props) => {
 
         </div>
         <div class="flip-card-back">
-            <p class="title">Acá va otra foto</p>
-            <p>El nombre del equipo</p>
+        <img src={props.image} alt={props.name} />
+        <p class="title">{props.name}</p>
         </div>
     </div>
 </div>

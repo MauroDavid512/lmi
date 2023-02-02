@@ -7,11 +7,11 @@ const Landing = () => {
 
     return (
         <div>
-            <h1>Bienvenid@ al sitio oficial de la</h1>
+            <h1 class="letras">Bienvenid@ al sitio oficial de la</h1>
             <br />
-            <img className="imageLanding" src="https://res.cloudinary.com/maurodavid/image/upload/v1666718836/LMI/LOGO_LMI_yga1rh.png" alt="liga mendocina de improvisación" />
+            <img class="imageLanding" src="https://res.cloudinary.com/maurodavid/image/upload/v1675369638/LMI/LOGO_LMI_b2kcvj.png" alt="liga mendocina de improvisación" />
             <br />
-            <div className="padding"><Link to="/lmi/home"><button className="btn">ENTRAR</button></Link></div>
+            <div class="padding"><Link to="/lmi/home"><button className="btn">ENTRAR</button></Link></div>
         </div>
     )
 }

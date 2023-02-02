@@ -6,11 +6,13 @@ const GameCard = (props) => {
 
 
     return (
-        <div>
-            {props.name}
+        <div class="gameCard">
+            <img class="imggame" src={props.image} alt={props.name} />
             <br />
-            <img src={props.image} alt={props.name} />
+            <div>
+            <div class="tituloJuegos">{props.name}</div>
             <br />
+           
             <b>Improvisación de tipo {props.type}</b>
             <br />
             <b>Cantidad de jugadores: </b>{props.playersNumber}
@@ -19,7 +21,8 @@ const GameCard = (props) => {
             <br />
             <b>¿Cómo se juega?</b>
             <br />
-            {props.description}
+            <div class="description">{props.description}</div>
+            </div>
         </div>
     )
 }

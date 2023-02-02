@@ -24,13 +24,13 @@ const Players = () => {
 
     return (
         <div>
-            <h1>JUGADORES</h1>
+            <h1 class="letras">JUGADORES</h1>
             <br />
             {admin ? <button title={create ? "cerrar panel" : "Agregar Jugador/a"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
-            {create ? <CreatePlayer/>:false}
+            {create && admin? <CreatePlayer/>:false}
             <div class="center">
             <div class="playerContainer">
-            {players?players.map(e => <PlayerCard name={e.name} image={e.image} id={e.id}/>):false}
+            {players?players.map(e => <PlayerCard name={e.name} image={e.image} id={e.id} />):false}
             </div>
             </div>
         </div>
