@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const {Team} = require("../db")
 const { getAllTeams, createTeam, getTeamDetails, getTeamPlayers, updateTeam } = require('./utils')
 const router = Router();
 
@@ -53,6 +54,22 @@ router.put("/update/:id", async (req, res) => {
         res.status(400).json({error: error.message})
     }
 })
+
+router.delete("/delete/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      let team = await Team.destroy({
+        where: {
+          id: id,
+        },
+      });
+  
+      return res.status(200).send("Equipo Borrado");
+    } catch (error) {
+      console.log("Error en ruta delete equipo", error);
+    }
+  });
 
 
 module.exports = router

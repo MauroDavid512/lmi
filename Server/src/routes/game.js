@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const { Game } = require("../db")
 const { getAllGames, getGameDetail, createGame } = require('./utils')
 const router = Router();
 
@@ -31,5 +32,21 @@ router.get("/:id", async (req, res) => {
         res.status(404).json({error: error.message})
     }
 })
+
+router.delete("/delete/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      let game = await Game.destroy({
+        where: {
+          id: id,
+        },
+      });
+  
+      return res.status(200).send("Juego Borrado");
+    } catch (error) {
+      console.log("Error en ruta delete juego", error);
+    }
+  });
 
 module.exports = router

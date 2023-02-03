@@ -203,17 +203,16 @@ const CreatePlayer = () => {
     }
 
     return (
-        <div>
+        <div class="createContainer">
 
             <h1>Introducir Jugador/a</h1>
             <form onSubmit={handleSubmit}>
-                <label>Nombre del Jugador</label>
+                <label><b>Nombre del Jugador</b></label>
+                <input type="text" class="createInput" name="name" value={newPlayer.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}  />
                 <br />
-                <input type="text" name="name" value={newPlayer.name} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}  />
                 {errors.name? errors.name : false}
                 <br />
-                <label>Fotografía</label>
-                <br />
+                <label><b>Fotografía</b> </label>
                 <input
                     id="inputFile"
                     type="file"
@@ -230,33 +229,34 @@ const CreatePlayer = () => {
                 {loading === 0 ? (
                     <div>
                         <br />
-                        <img src={image} alt="" />
+                        <img class="imggame" src={image} alt="" />
                         <br />
                     </div>
                 ) : (
                     false
                 )}
+                <br />
                 {errors.img ? errors.img : false}
                 <br />
-                <label>Edad</label>
+                <label><b>Edad</b></label>
+                <input type="text" class="createInput" name="age" value={newPlayer.age} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
+                
                 <br />
-                <input type="text" name="age" value={newPlayer.age} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
                 {errors.age? errors.age : false}
                 <br />
-                <label>Cumpleaños</label>
+                <div class="margin"></div>
+                <label><b>Cumpleaños</b> </label>
+                <input type="date" class="createInput" name="birthday" value={newPlayer.birthday} onChange={e => handleChange(e)} />
                 <br />
-                <input type="date" name="birthday" value={newPlayer.birthday} onChange={e => handleChange(e)} />
-                <br />
-                <label>Descripción</label>
-                <br />
-                <textarea type="text" name="description" value={newPlayer.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
+                <label ><b >Descripción</b></label>
+                <br />                
+                <br /><textarea type="text" class="descriptionInput" name="description" value={newPlayer.description} onChange={e => handleChange(e)} onKeyUp={e => handleErrors(e)}/>
                 {errors.description? errors.description : false}
                 <br />
                 <button type="submit" >Agragar a base de datos</button>
 
 
             </form>
-            <hr />
         </div>
     )
 

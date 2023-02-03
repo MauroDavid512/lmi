@@ -62,6 +62,8 @@ const getPlayerDetails = async (id) => {
     }
 }
 
+
+
 const updatePlayer = async (id, data) => {
     try {
         const allPlayers = await getAllPlayers()

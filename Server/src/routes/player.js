@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const {Player} = require("../db")
 const { getAllPlayers, createPlayer, getPlayerDetails, getPlayerTeams, updatePlayer } = require('./utils')
 const router = Router();
 
@@ -10,6 +11,22 @@ router.get("/", async (req, res) => {
         res.status(404).json({error:error.message})
     }
 })
+
+router.delete("/delete/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      let player = await Player.destroy({
+        where: {
+          id: id,
+        },
+      });
+      const actualPlayers = await getAllPlayers()
+      return res.status(200).send(actualPlayers);
+    } catch (error) {
+      console.log("Error en ruta delete jugador", error);
+    }
+  });
 
 router.get("/teams/:id", async (req, res) => {
     try{

@@ -14,7 +14,11 @@ import {
     TEAMDETAIL,
     TOURNAMENTDETAIL,
     ADMINON,
-    ADMINOFF
+    ADMINOFF,
+    DELETE_PLAYER,
+    DELETE_TEAM,
+    DELETE_TOURNAMENT,
+    DELETE_GAME
 } from '../actions'
 
 
@@ -84,6 +88,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 playerDetail: action.payload
+            }
+        case DELETE_PLAYER:
+            return {
+                ...state,
+                players: action.payload
             }
 
         // Funcionalidades de TEAM --------------------------------------------------------
