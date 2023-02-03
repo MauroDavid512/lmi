@@ -257,7 +257,7 @@ const PlayerDetail = () => {
             {admin? <button onClick={e=> handleEditOn(e, "description")}>{edit.description? "Cancelar": "Editar"}</button> : false}
             {admin && edit.description ? <div><textarea name="description"  value={value.description} onChange={e => handleChange(e)} onKeyUp={e=>handleErrors(e)}/><br />{errors.description? errors.description : false}<button onClick={e => handleSubmitChange(e, "description")}>Guardar cambios</button></div> : false}
 
-            {player.teams? <div> <p>Equipos:</p> {player.teams.map(e => <div> <br /><TeamCard id = {e.id} name = {e.name} image = {e.image} /> </div>)} </div>: <p>Este jugador aun no tiene equipos cargados</p> }
+            {player.teams? <div> <p>Equipos:</p> {player.teams.map(e => <div> <TeamCard id = {e.id} name = {e.name} image = {e.image} /> </div>)} </div>: <p>Este jugador aun no tiene equipos cargados</p> }
 
         </div>
     )

@@ -28,7 +28,11 @@ const Teams = () => {
             <h1 class="letras">EQUIPOS</h1>
             {admin ? <button title={create ? "cerrar panel" : "Agregar Equipo"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
             {create ? <CreateTeam/>:false}
+            <div class="center">
+            <div class="teamContainer">
             {team? team.map(e => <TeamCard name={e.name} image={e.image} id={e.id}/>):false}
+            </div>
+            </div>
         </div>
     )
 }

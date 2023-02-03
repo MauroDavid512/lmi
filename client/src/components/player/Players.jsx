@@ -26,7 +26,7 @@ const Players = () => {
         <div>
             <h1 class="letras">JUGADORES</h1>
             <br />
-            {admin ? <button title={create ? "cerrar panel" : "Agregar Jugador/a"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
+            {admin ? <button title={create ? "cerrar panel" : "Agregar Jugador/a"} onClick={handleCreate}>{create ? " - " : " + "}</button> : false}
             {create && admin? <CreatePlayer/>:false}
             <div class="center">
             <div class="playerContainer">

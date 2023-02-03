@@ -49,12 +49,12 @@ const LogAdmin = () => {
 
     return (
         <div class="logAdmin">
-        <button class="" onClick={handleAdminButton}>Admin</button>
+        {!admin?<button class="" onClick={handleAdminButton}>Admin</button>:false}
             {input.adminButton && !admin ? <div>
                 <input type="password" class="input" placeholder="Código" onChange={e => handleHolder(e)} value={input.holder}/>
                 <button onClick={handleLogIn}>Entrar</button>
                 </div> : false}
-            {admin ? <div><p>Perfil administrativo activo</p><br /><button onClick={handleLogOut}>Salir</button></div>: false}
+            {admin ? <div class="logAdminOn"><p class="adminOn">Admin On</p><br /><button onClick={handleLogOut}>Salir</button></div>: false}
         </div>
     )
 }

@@ -6,12 +6,14 @@ const TeamCard = (props) => {
 
 
     return (
-        <Link to={`/lmi/team/${props.id}`} >
-        <div>
-            {props.name}
-            <br />
-            <img src={props.image} alt={props.name} />
-        </div>
+        <Link class="decorationNone" to={`/lmi/team/${props.id}`} >
+            <div class="teamCard">
+
+                <br />
+                <img class="imageTeamCard" src={props.image} alt={props.name} />
+                <br />
+                <div class="title">{props.name}</div>
+            </div>
         </Link>
     )
 }

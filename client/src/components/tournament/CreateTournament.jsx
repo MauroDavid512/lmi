@@ -307,7 +307,7 @@ const CreateTournament = () => {
                 <br />
                 <h2> Equipos en el torneo: </h2>
                 <br />
-                {teams.tournamentTeams.length > 0 ? teams.tournamentTeams.map(el => <div>{!resume ?<button title="Remover equipo" onClick={e => removeTeam(e, el.id, el.name, el.image)}>X</button>: false} <h5>{el.name}</h5> <br />  </div>) : <h4>Aun no se han elegido equipos</h4>}
+                {teams.tournamentTeams.length > 0 ? teams.tournamentTeams.map(el => <div>{!resume ?<button title="Remover equipo" onClick={e => removeTeam(e, el.id, el.name, el.image)}>❌</button>: false} <h5>{el.name}</h5> <br />  </div>) : <h4>Aun no se han elegido equipos</h4>}
                 <br />
                 <h6>Si un equipo no aparece en la lista es por que no está en base de datos, andá a "Equipos" para sumarlo</h6>
                 {Object.keys(errors).length === 0 && newTournament.name !== "" && newTournament.description!== "" && teams.tournamentTeams.length > 1 ?<button onClick={e => handleConfirm(e)} >Confirmar Torneo</button> : false}

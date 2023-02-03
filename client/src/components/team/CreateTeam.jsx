@@ -290,7 +290,7 @@ const CreateTeam = () => {
                 <br />
                 <h2> Jugadores del equipo: </h2>
                 <br />
-                {players.teamPlayers.length > 0 ? players.teamPlayers.map(el => <div>{!resume ?<button title="Remover jugador/a" onClick={e => removePlayer(e, el.id, el.name, el.image)}>X</button>: false} <h5>{el.name}</h5> <br />  </div>) : <h4>Aun no se han elegido jugadores</h4>}
+                {players.teamPlayers.length > 0 ? players.teamPlayers.map(el => <div>{!resume ?<button title="Remover jugador/a" onClick={e => removePlayer(e, el.id, el.name, el.image)}>❌</button>: false} <h5>{el.name}</h5> <br />  </div>) : <h4>Aun no se han elegido jugadores</h4>}
                 <br />
                 {players.teamPlayers.length < 4 && players.teamPlayers.length !== 0 ? <div>Falta{players.teamPlayers.length === 3? ` 1 jugador` : `n ${4 - players.teamPlayers.length} jugadores`} <br /><h6>Si un jugador no aparece en la lista es por que no está en base de datos, andá a "Jugadores" para sumarle</h6></div> :false}
                 {players.teamPlayers.length === 4 && Object.keys(errors).length === 0 && newTeam.name !== "" && newTeam.description!== "" ? <button onClick={e => handleConfirm(e)}>Confirmar Equipo</button> : false}

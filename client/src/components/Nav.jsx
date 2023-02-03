@@ -21,7 +21,7 @@ const Nav = () => {
 
 
     return (
-        <div class="orange">
+        <div class="navBack">
             <div class="navtop">
                 <div class="searchBarContainer">
                 <SearchBar/>

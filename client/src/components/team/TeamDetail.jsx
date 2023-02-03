@@ -186,8 +186,8 @@ const TeamDetail = () => {
 
 
     return (
-        <div>
-            <img src={team.image} alt="" />
+        <div class="letras">
+            <img class="imgTeamDetail" src={team.image} alt="" />
             <br />
             {admin? <button onClick={e=> handleEditOn(e, "image")}>{edit.image? "Cancelar": "Cambiar imagen"}</button> : false}
             {admin && edit.image ? <div><input
@@ -217,14 +217,21 @@ const TeamDetail = () => {
             <br />
             {admin? <button onClick={e=> handleEditOn(e, "name")}>{edit.name? "Cancelar": "Editar"}</button> : false}
             {admin && edit.name ? <div><input type="text" name="name" value={value.name} onChange={e => handleChange(e)} onKeyUp={e=>handleErrors(e)}/><br />{errors.name? errors.name : false}<button onClick={e => handleSubmitChange(e, "name")}>Guardar cambios</button></div> : false}
-            <h2>{team.description}</h2>
+            
+            <div class="center">
+            <h2 class="descripTeam">{team.description}</h2>
+            </div>
             <br />
             {admin? <button onClick={e=> handleEditOn(e, "description")}>{edit.description? "Cancelar": "Editar"}</button> : false}
             {admin && edit.description ? <div><textarea name="description"  value={value.description} onChange={e => handleChange(e)} onKeyUp={e=>handleErrors(e)}/><br />{errors.description? errors.description : false}<button onClick={e => handleSubmitChange(e, "description")}>Guardar cambios</button></div> : false}
 
             <h3>Jugadores:</h3>
             <br />
+            <div class="center">
+            <div class="playerContainer">
             {team.players? team.players.map(e => <PlayerCard id={e.id} name={e.name} image={e.image} />) : false}
+            </div>
+            </div>
         </div>
     )
 }
