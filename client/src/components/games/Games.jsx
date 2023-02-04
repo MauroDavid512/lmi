@@ -25,7 +25,7 @@ const Games = () => {
 
     return (
         <div>
-            <h1 class="letras">JUEGOS</h1>
+            <h1 class="titleInit">JUEGOS</h1>
             {admin ? <button title={create ? "cerrar panel" : "Agregar Juego"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
             {create ? <CreateGame /> : false}
             <div class="center">

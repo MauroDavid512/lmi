@@ -25,7 +25,7 @@ const Teams = () => {
 
     return (
         <div>
-            <h1 class="letras">EQUIPOS</h1>
+            <h1 class="titleInit">EQUIPOS</h1>
             {admin ? <button title={create ? "cerrar panel" : "Agregar Equipo"} onClick={handleCreate}>{create ? "-" : "+"}</button> : false}
             {create ? <CreateTeam/>:false}
             <div class="center">
